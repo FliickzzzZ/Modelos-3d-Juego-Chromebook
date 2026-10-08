@@ -53,7 +53,7 @@
     function x(t, e, o = .38) {
         return Math.abs(t) > 22 - o || Math.abs(e) > 40 - o || g.some(n => Math.abs(t - n.x) < n.w / 2 + o && Math.abs(e - n.z) < n.d / 2 + o);
     }
-    function v(t, e, o, n, i = .48) {
+    function y(t, e, o, n, i = .48) {
         const a = Math.hypot(o - t, n - e), s = Math.max(1, Math.ceil(a / .6));
         for (let a = 1; a <= s; a++) {
             const r = a / s;
@@ -61,7 +61,7 @@
         }
         return !0;
     }
-    const y = [];
+    const v = [];
     function M(t, e) {
         return Math.abs(t) > 4.9 && Math.abs(t) < 8.2 ? .22 : .06;
     }
@@ -72,12 +72,12 @@
     w(-13, 3, 12.4, 12.6, 17), w(13, -13, 12.4, 14.3, 21);
     for (const [e, o, n] of [ [ 3.2, 14, .1 ], [ -3.2, -14, -.12 ], [ 3.3, -29, .2 ] ]) {
         const i = new t.Group;
-        i.position.set(e, .06, o), i.rotation.y = n, s.add(i), y.push({
+        i.position.set(e, .06, o), i.rotation.y = n, s.add(i), v.push({
             g: i,
             low: new t.Group
         }), w(e, o, 2.3, 4.6, 1.6);
     }
-    const b = h(4015424, .55), A = h(6178356, .25), z = h(7959915);
+    const b = h(4015424, .55), z = h(6178356, .25), A = h(7959915);
     function S(e, o, n, i, a, s, r) {
         const c = new t.Mesh(new t.CylinderGeometry(a, a, s, 7), r);
         return c.position.set(o, n, i), e.add(c), c.castShadow = !0, c;
@@ -88,29 +88,29 @@
         color: 2370338
     });
     let k = 47;
-    function E() {
+    function C() {
         return k = 1664525 * k + 1013904223 >>> 0, k / 4294967296;
     }
-    const C = [];
+    const E = [];
     for (let t = 0; t < 95; t++) {
-        let t = 9 * (E() - .5), e = 78 * (E() - .5);
+        let t = 9 * (C() - .5), e = 78 * (C() - .5);
         for (let o = 0; o < 5; o++) {
-            const o = t + .7 * (E() - .5), n = e + .5 * E();
-            C.push(t, .058, e, o, .058, n), t = o, e = n;
+            const o = t + .7 * (C() - .5), n = e + .5 * C();
+            E.push(t, .058, e, o, .058, n), t = o, e = n;
         }
     }
     const D = new t.BufferGeometry;
-    D.setAttribute("position", new t.Float32BufferAttribute(C, 3));
-    const T = new t.LineSegments(D, L);
-    T.userData.decorative = !0, s.add(T);
-    const O = new t.DodecahedronGeometry(1, 0), R = new t.InstancedMesh(O, z, 65), P = new t.Matrix4;
+    D.setAttribute("position", new t.Float32BufferAttribute(E, 3));
+    const O = new t.LineSegments(D, L);
+    O.userData.decorative = !0, s.add(O);
+    const T = new t.DodecahedronGeometry(1, 0), R = new t.InstancedMesh(T, A, 65), P = new t.Matrix4;
     for (let e = 0; e < 65; e++) {
-        const o = (E() > .5 ? 1 : -1) * (4.4 + 2 * E()), n = 78 * (E() - .5);
-        P.compose(new t.Vector3(o, .09, n), (new t.Quaternion).setFromEuler(new t.Euler(E(), 6 * E(), E())), new t.Vector3(.06 + .19 * E(), .035 + .12 * E(), .06 + .17 * E())), 
+        const o = (C() > .5 ? 1 : -1) * (4.4 + 2 * C()), n = 78 * (C() - .5);
+        P.compose(new t.Vector3(o, .09, n), (new t.Quaternion).setFromEuler(new t.Euler(C(), 6 * C(), C())), new t.Vector3(.06 + .19 * C(), .035 + .12 * C(), .06 + .17 * C())), 
         R.setMatrixAt(e, P);
     }
     R.userData.decorative = !0, s.add(R);
-    for (const [t, e] of [ [ -6.4, 19 ], [ 6.8, -2 ] ]) S(s, t, .55, e, .35, 1.1, b), S(s, t, 1.12, e, .39, .06, A);
+    for (const [t, e] of [ [ -6.4, 19 ], [ 6.8, -2 ] ]) S(s, t, .55, e, .35, 1.1, b), S(s, t, 1.12, e, .39, .06, z);
     const I = document.createElement("canvas");
     I.width = 512, I.height = 256;
     const N = I.getContext("2d");
@@ -122,34 +122,34 @@
         map: _,
         roughness: 1
     })), S(s, -6.8, 1.3, 28, .04, 2.6, b);
-    const F = -40, G = Math.round(40) + 1, B = .48, V = new Uint8Array(G * G);
-    function U(t, e) {
-        return e * G + t;
-    }
+    const G = -40, F = Math.round(40) + 1, V = .48, B = new Uint8Array(F * F);
     function j(t, e) {
+        return e * F + t;
+    }
+    function U(t, e) {
         return {
-            x: F + 2 * t,
-            z: F + 2 * e
+            x: G + 2 * t,
+            z: G + 2 * e
         };
     }
     function W() {
         let t = 0;
-        for (let e = 0; e < G; e++) for (let o = 0; o < G; o++) {
-            const n = j(o, e), i = !x(n.x, n.z, B);
-            V[U(o, e)] = i ? 1 : 0, i && t++;
+        for (let e = 0; e < F; e++) for (let o = 0; o < F; o++) {
+            const n = U(o, e), i = !x(n.x, n.z, V);
+            B[j(o, e)] = i ? 1 : 0, i && t++;
         }
         console.log("Navegación lista:", t, "casillas");
     }
     function q(t, e) {
         return function(t, e) {
-            return t >= 0 && e >= 0 && t < G && e < G;
-        }(t, e) && 1 === V[U(t, e)];
+            return t >= 0 && e >= 0 && t < F && e < F;
+        }(t, e) && 1 === B[j(t, e)];
     }
     function Z(t, e) {
         const o = function(t, e) {
             return {
-                ix: Math.round((t - F) / 2),
-                iz: Math.round((e - F) / 2)
+                ix: Math.round((t - G) / 2),
+                iz: Math.round((e - G) / 2)
             };
         }(t, e);
         if (q(o.ix, o.iz)) return o;
@@ -158,7 +158,7 @@
             for (let s = -a; s <= a; s++) for (let r = -a; r <= a; r++) {
                 const a = o.ix + r, c = o.iz + s;
                 if (!q(a, c)) continue;
-                const l = j(a, c), d = Math.hypot(l.x - t, l.z - e);
+                const l = U(a, c), d = Math.hypot(l.x - t, l.z - e);
                 d < i && (i = d, n = {
                     ix: a,
                     iz: c
@@ -169,7 +169,7 @@
         return null;
     }
     W();
-    class J {
+    class H {
         constructor() {
             this.a = [];
         }
@@ -203,17 +203,17 @@
             return this.a.length;
         }
     }
-    function K(t, e, o, n) {
+    function J(t, e, o, n) {
         const i = Z(t, e), a = Z(o, n);
         if (!i || !a) return null;
-        const s = U(i.ix, i.iz), r = U(a.ix, a.iz);
-        if (s === r) return v(t, e, o, n, B) ? [ {
+        const s = j(i.ix, i.iz), r = j(a.ix, a.iz);
+        if (s === r) return y(t, e, o, n, V) ? [ {
             x: o,
             z: n
         } ] : null;
-        const c = G * G, l = new Float32Array(c), d = new Int32Array(c), u = new Uint8Array(c);
+        const c = F * F, l = new Float32Array(c), d = new Int32Array(c), u = new Uint8Array(c);
         l.fill(1 / 0), d.fill(-1);
-        const h = new J;
+        const h = new H;
         l[s] = 0;
         const p = (t, e) => Math.abs(t - a.ix) + Math.abs(e - a.iz);
         h.push({
@@ -236,10 +236,10 @@
                 for (const [e, o] of m) {
                     const n = t.ix + e, i = t.iz + o;
                     if (!q(n, i)) continue;
-                    const a = U(n, i);
+                    const a = j(n, i);
                     if (u[a]) continue;
-                    const s = j(t.ix, t.iz), r = j(n, i);
-                    if (!v(s.x, s.z, r.x, r.z, B)) continue;
+                    const s = U(t.ix, t.iz), r = U(n, i);
+                    if (!y(s.x, s.z, r.x, r.z, V)) continue;
                     const c = l[t.id] + 1;
                     c >= l[a] || (l[a] = c, d[a] = t.id, h.push({
                         id: a,
@@ -255,43 +255,43 @@
         const w = [];
         let x = r;
         for (;x !== s && x >= 0; ) {
-            const t = x % G, e = Math.floor(x / G);
-            if (w.push(j(t, e)), x = d[x], w.length > c) return null;
+            const t = x % F, e = Math.floor(x / F);
+            if (w.push(U(t, e)), x = d[x], w.length > c) return null;
         }
         w.reverse();
-        const y = [];
-        let M = t, b = e, A = 0;
-        for (;A < w.length; ) {
-            let t = A;
-            for (let e = A + 1; e < w.length && v(M, b, w[e].x, w[e].z, B); e++) t = e;
+        const v = [];
+        let M = t, b = e, z = 0;
+        for (;z < w.length; ) {
+            let t = z;
+            for (let e = z + 1; e < w.length && y(M, b, w[e].x, w[e].z, V); e++) t = e;
             const e = w[t];
-            y.push(e), M = e.x, b = e.z, A = t + 1;
+            v.push(e), M = e.x, b = e.z, z = t + 1;
         }
-        return y;
+        return v;
     }
-    function H() {
+    function K() {
         const t = r.position.x, e = r.position.z;
         for (let o = 0; o < 100; o++) {
             const o = Math.random() * Math.PI * 2, n = 13 + 10 * Math.random(), i = t + Math.sin(o) * n, a = e + Math.cos(o) * n;
             if (x(i, a, .65)) continue;
             if (kt.some(t => Math.hypot(t.actor.position.x - i, t.actor.position.z - a) < 1.5)) continue;
-            if (v(i, a, t, e, .48)) return {
+            if (y(i, a, t, e, .48)) return {
                 x: i,
                 z: a
             };
-            if (K(i, a, t, e)) return {
+            if (J(i, a, t, e)) return {
                 x: i,
                 z: a
             };
         }
         const o = Z(t + 12, e + 12);
         if (o) {
-            const t = j(o.ix, o.iz);
+            const t = U(o.ix, o.iz);
             if (!x(t.x, t.z, .65)) return t;
         }
         return null;
     }
-    const X = new e, Y = t => "https://cdn.jsdelivr.net/gh/FliickzzzZ/Modelos-3d-Juego-Chromebook@main/" + t.split("/").map(encodeURIComponent).join("/"), Q = t => new Promise((e, o) => X.load(Y(t), e, void 0, o));
+    const X = new e, Y = t => "https://cdn.jsdelivr.net/gh/FliickzzzZ/Modelos-3d-Juego-Chromebook@a3b78f98c0684087175058e2cd899880dc7fcef3/" + t.split("/").map(encodeURIComponent).join("/"), Q = t => new Promise((e, o) => X.load(Y(t), e, void 0, o));
     let $ = !1, tt = !1;
     const et = {
         zombies: [],
@@ -357,18 +357,18 @@
         }, o.start(), o.stop(i + e[2]);
     }
     async function mt(t, e = null) {
-        if (!st || "running" !== st.state || Gt) return;
+        if (!st || "running" !== st.state || Ft) return;
         if ("zombie" === t && ([ ...lt ].filter(t => "zombie" === t.type).length >= 2 || [ ...lt ].some(t => t.owner === e))) return;
         const o = at[t];
         if (!o?.length) return void pt(t);
-        const n = Kt, i = o[Math.floor(Math.random() * o.length)];
+        const n = Jt, i = o[Math.floor(Math.random() * o.length)];
         try {
             dt.has(i) || dt.set(i, fetch(i).then(t => {
                 if (!t.ok) throw Error(t.status);
                 return t.arrayBuffer();
             }).then(t => st.decodeAudioData(t)));
             const o = await dt.get(i);
-            if (n !== Kt || Gt || e && !kt.includes(e) || !Ft && "death" !== t) return;
+            if (n !== Jt || Ft || e && !kt.includes(e) || !Gt && "death" !== t) return;
             if ("zombie" === t && [ ...lt ].filter(t => "zombie" === t.type).length >= 2) return;
             const a = st.createBufferSource(), s = st.createGain();
             a.buffer = o;
@@ -396,7 +396,7 @@
                 lt.delete(l), a.disconnect(), s.disconnect(), c?.disconnect();
             }, c && ft(l), a.start(), a.stop(st.currentTime + Math.min(o.duration, "zombie" === t ? 2.5 : "shot" === t ? .4 : 5));
         } catch (e) {
-            dt.delete(i), n === Kt && !Gt && Ft && pt(t);
+            dt.delete(i), n === Jt && !Ft && Gt && pt(t);
         }
     }
     function ft(t) {
@@ -446,20 +446,20 @@
     }, {
         path: "Sonidos/universfield-male-scream-121085.mp3"
     } ]);
-    const vt = new t.Group;
-    r.add(vt);
     const yt = new t.Group;
-    vt.add(yt), f(yt, 0, 0, -.26, .19, .2, .63, h(1514012, .7)), f(yt, 0, -.17, -.04, .13, .32, .17, h(2697772)), 
-    f(yt, 0, .09, -.48, .1, .07, .3, h(1514012, .7));
+    r.add(yt);
+    const vt = new t.Group;
+    yt.add(vt), f(vt, 0, 0, -.26, .19, .2, .63, h(1514012, .7)), f(vt, 0, -.17, -.04, .13, .32, .17, h(2697772)), 
+    f(vt, 0, .09, -.48, .1, .07, .3, h(1514012, .7));
     const Mt = new t.PointLight(16760169, 0, 5);
-    Mt.position.set(0, 0, -.8), vt.add(Mt);
-    let bt = null, At = 0;
-    const zt = [ [ 0, 0, 0 ], [ 0, Math.PI, 0 ], [ 0, Math.PI / 2, 0 ], [ 0, -Math.PI / 2, 0 ], [ Math.PI / 2, 0, 0 ], [ -Math.PI / 2, 0, 0 ], [ 0, 0, Math.PI / 2 ], [ 0, 0, -Math.PI / 2 ] ];
+    Mt.position.set(0, 0, -.8), yt.add(Mt);
+    let bt = null, zt = 0;
+    const At = [ [ 0, 0, 0 ], [ 0, Math.PI, 0 ], [ 0, Math.PI / 2, 0 ], [ 0, -Math.PI / 2, 0 ], [ Math.PI / 2, 0, 0 ], [ -Math.PI / 2, 0, 0 ], [ 0, 0, Math.PI / 2 ], [ 0, 0, -Math.PI / 2 ] ];
     function St() {
-        bt && (bt.rotation.set(...zt[At]), console.log("Pistola orientación", At + 1, "/", zt.length));
+        bt && (bt.rotation.set(...At[zt]), console.log("Pistola orientación", zt + 1, "/", At.length));
     }
-    const Lt = {}, kt = [], Et = new t.Clock, Ct = new t.Raycaster;
-    let Dt = 100, Tt = 12, Ot = 96, Rt = 0, Pt = 0, It = 0, Nt = 0, _t = 0, Ft = !1, Gt = !1, Bt = !1, Vt = !1, Ut = 0, jt = 0, Wt = 0, qt = !0, Zt = 0, Jt = 0, Kt = 0, Ht = .25, Xt = 0, Yt = 0, Qt = 0, $t = 0, te = !1;
+    const Lt = {}, kt = [], Ct = new t.Clock, Et = new t.Raycaster;
+    let Dt = 100, Ot = 12, Tt = 96, Rt = 0, Pt = 0, It = 0, Nt = 0, _t = 0, Gt = !1, Ft = !1, Vt = !1, Bt = !1, jt = 0, Ut = 0, Wt = 0, qt = !0, Zt = 0, Ht = 0, Jt = 0, Kt = .25, Xt = 0, Yt = 0, Qt = 0, $t = 0, te = !1;
     const ee = {
         waves: {
             title: "OLEADAS",
@@ -471,7 +471,7 @@
         }
     };
     function oe() {
-        n("health") && (n("health").textContent = Math.max(0, Math.ceil(Dt)) + " ♥"), n("ammo") && (n("ammo").textContent = (Bt ? "..." : Tt) + " / " + Ot), 
+        n("health") && (n("health").textContent = Math.max(0, Math.ceil(Dt)) + " ♥"), n("ammo") && (n("ammo").textContent = (Vt ? "..." : Ot) + " / " + Tt), 
         n("wave") && (n("wave").textContent = Rt), n("kills") && (n("kills").textContent = Pt);
     }
     let ne;
@@ -496,7 +496,7 @@
         if (x(e, o, .55)) {
             const t = Z(e, o);
             if (!t) return null;
-            const n = j(t.ix, t.iz);
+            const n = U(t.ix, t.iz);
             if (x(e = n.x, o = n.z, .55)) return null;
         }
         const n = new t.Group;
@@ -586,10 +586,10 @@
         const o = r.position.x, n = r.position.z, i = t.actor.position.x, a = t.actor.position.z, s = Math.hypot(o - i, n - a);
         if (s <= 1.15) return t.path = [], t.stuckTime = 0, 0;
         let c = o, l = n;
-        if (v(i, a, o, n, B)) t.path = [], t.pathFailed = !1; else {
+        if (y(i, a, o, n, V)) t.path = [], t.pathFailed = !1; else {
             if (t.pathTimer -= e, t.pathTimer <= 0 && Qt < 2) {
                 Qt++, t.pathTimer = 1 + .6 * Math.random();
-                const e = K(i, a, o, n);
+                const e = J(i, a, o, n);
                 e ? (t.path = e, t.pathFailed = !1) : (t.path = [], t.pathFailed = !0);
             }
             for (;t.path.length && Math.hypot(t.path[0].x - i, t.path[0].z - a) < .65; ) t.path.shift();
@@ -600,7 +600,7 @@
         if (h > .03) {
             const o = Math.min(t.speed * e, h), n = i + d / h * o, s = a + u / h * o;
             let r = i, c = a;
-            v(i, a, n, a, B) && (r = n), v(r, a, r, s, B) && (c = s), r === i && c === a && v(i, a, n, s, B) && (r = n, c = s), 
+            y(i, a, n, a, V) && (r = n), y(r, a, r, s, V) && (c = s), r === i && c === a && y(i, a, n, s, V) && (r = n, c = s), 
             t.actor.position.x = r, t.actor.position.z = c, t.actor.position.y = M(r), p = Math.hypot(r - i, c - a);
             const l = p > 5e-4 ? r - i : d, m = p > 5e-4 ? c - a : u;
             let f = Math.atan2(l, m) - t.actor.rotation.y;
@@ -608,7 +608,7 @@
         }
         if (p < .003 && s > 1.5 ? t.stuckTime += e : t.stuckTime = Math.max(0, t.stuckTime - 2 * e), t.stuckTime > 1.3 && !t.pathFailed && (t.pathTimer = Math.min(t.pathTimer, .2)), 
         t.stuckTime > 7) {
-            const e = H();
+            const e = K();
             if (e) t.actor.position.set(e.x, M(e.x, e.z), e.z), t.path = [], t.pathTimer = 0, t.pathFailed = !1, t.stuckTime = 0, 
             console.warn("Zombi atascado recolocado", e); else {
                 ue(t);
@@ -619,10 +619,10 @@
         return p;
     }
     function le() {
-        Rt++, It = 4 + 3 * Rt, Nt = 0, _t = 0, Rt > 1 && (Ot += 24), ie("OLEADA " + Rt), mt("wave"), oe();
+        Rt++, It = 4 + 3 * Rt, Nt = 0, _t = 0, Rt > 1 && (Tt += 24), ie("OLEADA " + Rt), mt("wave"), oe();
     }
     function de() {
-        !Ft || Gt || Bt || 12 === Tt || Ot <= 0 || (Bt = !0, Yt = 1.15, oe(), mt("reload"));
+        !Gt || Ft || Vt || 12 === Ot || Tt <= 0 || (Vt = !0, Yt = 1.15, oe(), mt("reload"));
     }
     function ue(t) {
         ht(t), a.remove(t.actor), t.mixer?.stopAllAction();
@@ -636,15 +636,15 @@
         return t.intersectObjects(s.children.filter(t => !t.userData.decorative), !0).find(t => !t.object.userData.decorative);
     }
     function xe() {
-        if (!Ft || Gt || Bt) return;
+        if (!Gt || Ft || Vt) return;
         const e = performance.now();
         if (e - Zt < 235) return;
-        if (Tt <= 0) return void de();
-        Zt = e, Tt--, Jt = .13, Mt.intensity = 8, mt("shot"), a.updateMatrixWorld(!0), Ct.setFromCamera(new t.Vector2, l), 
-        Ct.far = 65;
-        const o = we(Ct);
-        let i = Ct.intersectObjects(kt.flatMap(t => t.hit), !1)[0];
-        o && (!i || o.distance < i.distance) && (i = null), ge.copy(Ct.ray.origin).addScaledVector(Ct.ray.direction, o ? o.distance : 65), 
+        if (Ot <= 0) return void de();
+        Zt = e, Ot--, Ht = .13, Mt.intensity = 8, mt("shot"), a.updateMatrixWorld(!0), Et.setFromCamera(new t.Vector2, l), 
+        Et.far = 65;
+        const o = we(Et);
+        let i = Et.intersectObjects(kt.flatMap(t => t.hit), !1)[0];
+        o && (!i || o.distance < i.distance) && (i = null), ge.copy(Et.ray.origin).addScaledVector(Et.ray.direction, o ? o.distance : 65), 
         i && ge.copy(i.point), Mt.getWorldPosition(fe), me.subVectors(ge, fe);
         const s = me.length();
         me.normalize(), he.set(fe, me), he.far = s + .02;
@@ -654,19 +654,19 @@
             t && (t.hp -= c.object.userData.head ? 3 : 1, n("hitmark").style.opacity = 1, setTimeout(() => n("hitmark").style.opacity = 0, 90), 
             t.hp <= 0 && (ue(t), Pt++, mt("zombieDeath")));
         }
-        oe(), 0 === Tt && Ot > 0 && de();
+        oe(), 0 === Ot && Tt > 0 && de();
     }
-    function ve(t) {
+    function ye(t) {
         for (const e of [ "main", "options", "load", "credits" ]) n(e + "-panel")?.classList.toggle("hidden", e !== t);
     }
-    function ye() {
-        n("menu")?.classList.remove("hidden"), ve("main");
+    function ve() {
+        n("menu")?.classList.remove("hidden"), ye("main");
     }
     function Me() {
         n("menu")?.classList.add("hidden");
     }
     const be = "deadzone-save-v3";
-    function Ae() {
+    function ze() {
         try {
             const t = JSON.parse(localStorage.getItem(be));
             return 3 === t?.version && Array.isArray(t.slots) ? t.slots : [];
@@ -674,25 +674,25 @@
             return [];
         }
     }
-    function ze() {
+    function Ae() {
         return {
             sector: "olivo-80-v1",
             mode: c.mode,
             hp: Dt,
-            ammo: Tt,
-            reserve: Ot,
+            ammo: Ot,
+            reserve: Tt,
             wave: Rt,
             kills: Pt,
             remaining: It,
             spawnWait: Nt,
             between: _t,
-            reloading: Bt,
+            reloading: Vt,
             reloadLeft: Yt,
             x: r.position.x,
             y: r.position.y,
             z: r.position.z,
-            yaw: Ut,
-            pitch: jt,
+            yaw: jt,
+            pitch: Ut,
             vy: Wt,
             grounded: qt,
             map: g.map(t => ({
@@ -703,7 +703,7 @@
                 z: t.position.z,
                 h: t.userData.height
             })),
-            cars: y.map(t => ({
+            cars: v.map(t => ({
                 x: t.g.position.x,
                 z: t.g.position.z,
                 rot: t.g.rotation.y
@@ -723,8 +723,8 @@
         return t && [ "waves", "explore" ].includes(t.mode) && [ t.hp, t.ammo, t.reserve, t.wave, t.kills, t.x, t.z, t.yaw, t.pitch ].every(Number.isFinite) && t.hp > 0 && t.hp <= 100 && t.ammo >= 0 && t.ammo <= 12 && t.reserve >= 0 && t.reserve <= 1e5 && t.wave >= 0 && t.wave <= 1e4 && Math.abs(t.x) < 88 && Math.abs(t.z) < 88 && Array.isArray(t.zombies) && t.zombies.length <= 12 && t.zombies.every(t => [ t.x, t.z, t.hp, t.speed ].every(Number.isFinite) && t.hp > 0 && t.speed > 0 && t.speed <= 3 && Math.abs(t.x) < 88 && Math.abs(t.z) < 88);
     }
     function Le(t = !0) {
-        if (Ft) try {
-            const e = ze(), o = Ae().filter(t => t.mode !== e.mode);
+        if (Gt) try {
+            const e = Ae(), o = ze().filter(t => t.mode !== e.mode);
             o.unshift(e), localStorage.setItem(be, JSON.stringify({
                 version: 3,
                 slots: o
@@ -737,19 +737,19 @@
         try {
             const t = d.domElement.requestPointerLock?.();
             t?.catch(() => {
-                Gt = !0, ye(), ie("CLIC EN CONTINUAR PARA JUGAR");
+                Ft = !0, ve(), ie("CLIC EN CONTINUAR PARA JUGAR");
             });
         } catch {
-            Gt = !0, ye();
+            Ft = !0, ve();
         }
     }
-    function Ee(t = "explore", e = null) {
+    function Ce(t = "explore", e = null) {
         if ($) {
-            Kt++, ht();
+            Jt++, ht();
             for (const t of [ ...kt ]) ue(t);
-            if (Object.keys(Lt).forEach(t => Lt[t] = !1), c.mode = t, Dt = 100, Tt = 12, Ot = 96, Rt = 0, Pt = 0, It = 0, 
-            Nt = 0, _t = 0, Ut = 0, jt = 0, Wt = 0, qt = !0, Bt = !1, Yt = 0, Ft = !0, Gt = !1, Vt = !1, te = !1, Zt = 0, 
-            Jt = 0, r.position.set(0, M(0), 30), r.visible = !0, n("hud").classList.remove("hidden"), e && Se(e)) {
+            if (Object.keys(Lt).forEach(t => Lt[t] = !1), c.mode = t, Dt = 100, Ot = 12, Tt = 96, Rt = 0, Pt = 0, It = 0, 
+            Nt = 0, _t = 0, jt = 0, Ut = 0, Wt = 0, qt = !0, Vt = !1, Yt = 0, Gt = !0, Ft = !1, Bt = !1, te = !1, Zt = 0, 
+            Ht = 0, r.position.set(0, M(0), 30), r.visible = !0, n("hud").classList.remove("hidden"), e && Se(e)) {
                 if ("olivo-80-v1" === e.sector && Array.isArray(e.map) && e.map.length === g.length && e.map.every(t => [ t.x, t.z, t.w, t.d, t.h ].every(Number.isFinite) && t.w > 0 && t.d > 0)) {
                     g.splice(0, g.length, ...e.map.map(t => ({
                         ...t
@@ -762,13 +762,13 @@
                         }
                     }
                     (e.cars || []).forEach((t, e) => {
-                        y[e] && [ t.x, t.z, t.rot ].every(Number.isFinite) && (y[e].g.position.set(t.x, 0, t.z), y[e].g.rotation.y = t.rot);
+                        v[e] && [ t.x, t.z, t.rot ].every(Number.isFinite) && (v[e].g.position.set(t.x, 0, t.z), v[e].g.rotation.y = t.rot);
                     }), W();
                 }
-                Dt = e.hp, Tt = e.ammo, Ot = e.reserve, Rt = e.wave, Pt = e.kills, It = Math.max(0, Math.min(1e5, Number(e.remaining) || 0)), 
-                Nt = Math.max(0, Number(e.spawnWait) || 0), _t = Math.max(0, Number(e.between) || 0), Ut = e.yaw, jt = Math.max(-1.2, Math.min(1.2, e.pitch)), 
+                Dt = e.hp, Ot = e.ammo, Tt = e.reserve, Rt = e.wave, Pt = e.kills, It = Math.max(0, Math.min(1e5, Number(e.remaining) || 0)), 
+                Nt = Math.max(0, Number(e.spawnWait) || 0), _t = Math.max(0, Number(e.between) || 0), jt = e.yaw, Ut = Math.max(-1.2, Math.min(1.2, e.pitch)), 
                 x(e.x, e.z) || r.position.set(e.x, Math.max(M(e.x, e.z), Number(e.y) || 0), e.z), Wt = Number.isFinite(e.vy) ? e.vy : 0, 
-                qt = !!e.grounded, Bt = !!e.reloading, Yt = Math.max(0, Math.min(1.15, Number(e.reloadLeft) || 0));
+                qt = !!e.grounded, Vt = !!e.reloading, Yt = Math.max(0, Math.min(1.15, Number(e.reloadLeft) || 0));
                 for (const o of e.zombies) {
                     if (x(o.x, o.z, .48)) {
                         "waves" === t && It++;
@@ -782,21 +782,21 @@
             Me(), oe(), ut(), Re(1, !0), ke();
         } else n("loading").textContent = "ESPERA · RECURSOS EN CARGA";
     }
-    function Ce() {
-        ht(), mt("death"), Ft = !1, Gt = !1, Vt = !1, te = !1, document.exitPointerLock?.(), ye(), n("hud").classList.add("hidden"), 
+    function Ee() {
+        ht(), mt("death"), Gt = !1, Ft = !1, Bt = !1, te = !1, document.exitPointerLock?.(), ve(), n("hud").classList.add("hidden"), 
         n("subtitle").textContent = `HAS CAÍDO · ${Pt} BAJAS`, n("continue").textContent = "REINTENTAR";
     }
-    n("new").onclick = () => Ee("explore"), n("waves").onclick = () => Ee("waves"), n("continue").onclick = function() {
-        if (!Ft) {
-            const t = Ae().find(Se);
-            return void (t ? Ee(t.mode, t) : Ee(c.mode));
+    n("new").onclick = () => Ce("explore"), n("waves").onclick = () => Ce("waves"), n("continue").onclick = function() {
+        if (!Gt) {
+            const t = ze().find(Se);
+            return void (t ? Ce(t.mode, t) : Ce(c.mode));
         }
         Me(), n("subtitle").textContent = "LA CIUDAD HA CAÍDO. TÚ TODAVÍA NO.", ut(), ke();
-    }, n("options").onclick = () => ve("options"), n("credits").onclick = () => ve("credits"), n("load").onclick = () => {
-        ve("load");
+    }, n("options").onclick = () => ye("options"), n("credits").onclick = () => ye("credits"), n("load").onclick = () => {
+        ye("load");
         const t = n("saves");
         t.replaceChildren();
-        const e = Ae().filter(Se);
+        const e = ze().filter(Se);
         try {
             const t = JSON.parse(localStorage.getItem("deadzone-save"));
             if (t && [ t.hp, t.ammo, t.reserve, t.wave, t.kills, t.x, t.z ].every(Number.isFinite)) {
@@ -815,10 +815,10 @@
         for (const o of e) {
             const e = document.createElement("button");
             e.textContent = `${ee[o.mode].title} · ${o.date ? new Date(o.date).toLocaleString() : "GUARDADO V5 · REINICIA OLEADA"}`, 
-            e.onclick = () => Ee(o.mode, o), t.append(e);
+            e.onclick = () => Ce(o.mode, o), t.append(e);
         }
         e.length || (t.textContent = "SIN PARTIDAS GUARDADAS");
-    }, document.querySelectorAll(".back").forEach(t => t.onclick = () => ve("main"));
+    }, document.querySelectorAll(".back").forEach(t => t.onclick = () => ye("main"));
     for (const t of [ "fov", "sens", "vol" ]) {
         const e = n(t);
         e && (e.oninput = () => {
@@ -826,12 +826,12 @@
         });
     }
     n("apply").onclick = () => {
-        l.fov = Number(n("fov").value), l.updateProjectionMatrix(), Ht = Number(n("sens").value), rt = Number(n("vol").value) / 100, 
+        l.fov = Number(n("fov").value), l.updateProjectionMatrix(), Kt = Number(n("sens").value), rt = Number(n("vol").value) / 100, 
         ct && (ct.volume = .38 * rt), gt();
         try {
             localStorage.setItem("deadzone-options", JSON.stringify({
                 fov: l.fov,
-                sensitivity: Ht,
+                sensitivity: Kt,
                 volume: rt,
                 quality: n("quality").value
             }));
@@ -839,27 +839,27 @@
         u.shadow.mapSize.set("high" === n("quality").value ? 2048 : 1024, "high" === n("quality").value ? 2048 : 1024), 
         u.shadow.map?.dispose(), u.shadow.map = null, d.setPixelRatio(Math.min(devicePixelRatio, "low" === n("quality").value ? .7 : "high" === n("quality").value ? 1.3 : 1));
         for (const t of [ "fov", "sens", "vol" ]) n(t + "-val").textContent = n(t).value + ("vol" === t ? "%" : "");
-        ve("main");
+        ye("main");
     }, document.addEventListener("keydown", t => {
-        Lt[t.code] = !0, "KeyR" === t.code && de(), "Space" === t.code && Ft && !Gt && qt && (Wt = 6, qt = !1), "F7" === t.code && (t.preventDefault(), 
-        At = (At + 1) % zt.length, St(), ie("PISTOLA: ORIENTACIÓN " + (At + 1) + "/8")), "KeyP" === t.code && Ft && !Gt && Le(), 
-        Ft && [ "Space", "ArrowUp", "ArrowDown" ].includes(t.code) && t.preventDefault();
+        Lt[t.code] = !0, "KeyR" === t.code && de(), "Space" === t.code && Gt && !Ft && qt && (Wt = 6, qt = !1), "F7" === t.code && (t.preventDefault(), 
+        zt = (zt + 1) % At.length, St(), ie("PISTOLA: ORIENTACIÓN " + (zt + 1) + "/8")), "KeyP" === t.code && Gt && !Ft && Le(), 
+        Gt && [ "Space", "ArrowUp", "ArrowDown" ].includes(t.code) && t.preventDefault();
     }), document.addEventListener("keyup", t => {
         Lt[t.code] = !1;
     }), document.addEventListener("mousemove", t => {
-        document.pointerLockElement === d.domElement && (Ut -= t.movementX * Ht * .01, jt = Math.max(-1.45, Math.min(1.45, jt - t.movementY * Ht * .01)));
+        document.pointerLockElement === d.domElement && (jt -= t.movementX * Kt * .01, Ut = Math.max(-1.45, Math.min(1.45, Ut - t.movementY * Kt * .01)));
     }), d.domElement.addEventListener("mousedown", t => {
-        2 !== t.button ? Ft && !Gt && 0 === t.button && (Vt = !0, document.pointerLockElement !== d.domElement ? d.domElement.requestPointerLock?.() : xe()) : te = Ft && !Gt;
+        2 !== t.button ? Gt && !Ft && 0 === t.button && (Bt = !0, document.pointerLockElement !== d.domElement ? d.domElement.requestPointerLock?.() : xe()) : te = Gt && !Ft;
     }), document.addEventListener("mouseup", t => {
-        0 === t.button && (Vt = !1), 2 === t.button && (te = !1);
+        0 === t.button && (Bt = !1), 2 === t.button && (te = !1);
     }), d.domElement.addEventListener("contextmenu", t => t.preventDefault()), document.addEventListener("pointerlockchange", () => {
-        if (Ft) if (document.pointerLockElement === d.domElement) Gt = !1, Me(), wt(); else {
-            Gt = !0, Vt = !1, te = !1, ht(), wt(), Object.keys(Lt).forEach(t => Lt[t] = !1), Le(!1), ye();
+        if (Gt) if (document.pointerLockElement === d.domElement) Ft = !1, Me(), wt(); else {
+            Ft = !0, Bt = !1, te = !1, ht(), wt(), Object.keys(Lt).forEach(t => Lt[t] = !1), Le(!1), ve();
             const t = n("menu")?.querySelector(".subtitle");
             t && (t.textContent = "PARTIDA EN PAUSA");
         }
     }), window.addEventListener("blur", () => {
-        Vt = !1, te = !1, Ft && (Gt = !0, ht(), xt(), Le(!1), document.exitPointerLock?.(), ye()), Object.keys(Lt).forEach(t => {
+        Bt = !1, te = !1, Gt && (Ft = !0, ht(), xt(), Le(!1), document.exitPointerLock?.(), ve()), Object.keys(Lt).forEach(t => {
             Lt[t] = !1;
         });
     });
@@ -869,37 +869,42 @@
         walk: null,
         idle: null,
         run: null,
-        current: null
-    }, Te = ae();
-    async function Oe() {
+        current: null,
+        hand: null
+    }, Oe = ae();
+    async function Te() {
         const e = await X.loadAsync("https://cdn.jsdelivr.net/gh/mrdoob/three.js@r160/examples/models/gltf/Soldier.glb"), o = ot(e);
         De.visual = nt(o, 1.8), De.visual.rotation.y = Math.PI, r.add(De.visual), o.traverse(t => {
             if (t.isMesh) {
                 t.castShadow = !0;
                 for (const e of Array.isArray(t.material) ? t.material : [ t.material ]) e.roughness = .92;
             }
-        }), De.mixer = new t.AnimationMixer(o);
+        }), De.hand = o.getObjectByName("mixamorigRightHand") || o.getObjectByName("mixamorig:RightHand"), De.mixer = new t.AnimationMixer(o);
         const i = it(e), a = t => {
             const e = i.find(e => e.name.toLowerCase() === t);
             if (!e) throw Error("Falta animación " + t);
             return De.mixer.clipAction(e);
         };
-        De.idle = a("idle"), De.walk = a("walk"), De.run = a("run"), De.current = De.idle, De.idle.play(), Te.g.visible = !1, 
+        De.idle = a("idle"), De.walk = a("walk"), De.run = a("run"), De.current = De.idle, De.idle.play(), Oe.g.visible = !1, 
         n("asset-status").textContent = "HUMANO · IDLE / WALK / RUN";
     }
     function Re(e, o = !1) {
         const n = !(!Lt.ControlLeft && !Lt.KeyC), i = c.moving;
-        if (r.rotation.y = Ut, De.mixer) {
+        if (r.rotation.y = jt, De.mixer) {
             const t = i ? Lt.ShiftLeft && !n ? De.run : De.walk : De.idle;
             t !== De.current && (De.current.fadeOut(.2), t.reset().setEffectiveTimeScale(1).setEffectiveWeight(1).fadeIn(.2).play(), 
             De.current = t), t.timeScale = n ? .65 : 1, De.mixer.update(e);
         }
         if (De.visual && (De.visual.position.y = 0), !De.visual) {
             const t = i ? .45 * Math.sin(.009 * performance.now()) : 0;
-            Te.legs[0].rotation.x = t, Te.legs[1].rotation.x = -t;
+            Oe.legs[0].rotation.x = t, Oe.legs[1].rotation.x = -t;
         }
-        vt.position.set(.3, n ? .94 : 1.24, -.38 + Jt), vt.rotation.set(te ? jt : 0, 0, 0);
-        const a = new t.Vector3(r.position.x, r.position.y + (n ? 1.05 : 1.5), r.position.z), d = (new t.Quaternion).setFromEuler(new t.Euler(jt, Ut, 0, "YXZ")), u = new t.Vector3(te ? .48 : .65, .12, te ? 1.9 : 3.5).applyQuaternion(d), h = a.clone().add(u);
+        if (yt.position.set(.3, n ? .94 : 1.24, -.38 + Ht), yt.rotation.set(te ? Ut : 0, 0, 0), De.hand) {
+            r.updateMatrixWorld(!0);
+            const e = new t.Vector3;
+            De.hand.getWorldPosition(e), r.worldToLocal(e), yt.position.copy(e), yt.position.y += .025, yt.position.z -= .07 - Ht;
+        }
+        const a = new t.Vector3(r.position.x, r.position.y + (n ? 1.05 : 1.5), r.position.z), d = (new t.Quaternion).setFromEuler(new t.Euler(Ut, jt, 0, "YXZ")), u = new t.Vector3(te ? .48 : .65, .12, te ? 1.9 : 3.5).applyQuaternion(d), h = a.clone().add(u);
         s.updateMatrixWorld(!0), pe.set(a, u.clone().normalize()), pe.far = u.length() + .15;
         const p = we(pe);
         p && h.copy(a).addScaledVector(pe.ray.direction, Math.max(.15, p.distance - .22)), o ? l.position.copy(h) : l.position.lerp(h, 1 - Math.exp(14 * -e)), 
@@ -920,7 +925,7 @@
             }
         });
     }
-    r.add(Te.g), Te.g.traverse(t => {
+    r.add(Oe.g), Oe.g.traverse(t => {
         t.isMesh && (t.material = h(t.position.y > 1.4 ? 10058340 : 4541767));
     });
     const Ie = t => "https://raw.githubusercontent.com/FliickzzzZ/Modelos-3d-Juego-Chromebook/deadzone/art-street-80m/deadzone/assets/" + t;
@@ -930,13 +935,13 @@
             const o = r[e];
             o && (o.wrapS = o.wrapT = t.RepeatWrapping, o.repeat.set(...a), o.anisotropy = 2, 0 === e && (o.colorSpace = t.SRGBColorSpace));
         }
-        e.map = r[0], e.normalMap = r[1], e.normalScale.set(.45, .45), e.roughnessMap = r[2], e.metalness = 0, e.roughness = .97, 
-        e.needsUpdate = !0;
+        e.color.set(16777215), e.map = r[0], e.normalMap = r[1], e.normalScale.set(.45, .45), e.roughnessMap = r[2], e.metalness = 0, 
+        e.roughness = .97, e.needsUpdate = !0;
     }
     async function _e() {
         const e = [ "Building_Small_1", "Building_Medium_2_001" ];
         for (let o = 0; o < 2; o++) {
-            const n = nt(ot(await X.loadAsync(Ie(e[o] + ".glb"))), o ? 21 : 17);
+            const n = nt(ot(await X.loadAsync(Ie(e[o] + ".gltf"))), o ? 21 : 17);
             n.rotation.y = o ? -Math.PI / 2 : Math.PI / 2, n.position.set(o ? 13 : -13, .22, o ? -13 : 3), n.userData.building = !0, 
             n.userData.height = o ? 21 : 17, n.userData.asset = e[o], s.add(n), n.traverse(t => {
                 t.isMesh && (t.castShadow = !0, t.receiveShadow = !0);
@@ -987,37 +992,37 @@
             for (const t of n) w(t.x, t.z, .65, .65, 6);
             const i = [], a = [];
             for (let t = 0; t < 65; t++) i.push({
-                x: (E() > .5 ? 1 : -1) * (7 + 1.1 * E()),
-                z: 77 * (E() - .5),
-                s: .55 + .5 * E(),
-                r: 6 * E()
+                x: (C() > .5 ? 1 : -1) * (7 + 1.1 * C()),
+                z: 77 * (C() - .5),
+                s: .55 + .5 * C(),
+                r: 6 * C()
             });
             for (let t = 0; t < 380; t++) a.push({
-                x: (E() > .5 ? 1 : -1) * (4.35 + 1.2 * E()),
-                z: 79 * (E() - .5),
-                s: .6 + .9 * E(),
-                r: 6 * E()
+                x: (C() > .5 ? 1 : -1) * (4.35 + 1.2 * C()),
+                z: 79 * (C() - .5),
+                s: .6 + .9 * C(),
+                r: 6 * C()
             });
             for (let t = 0; t < 100; t++) a.push({
-                x: 8.8 * (E() - .5),
-                z: 76 * (E() - .5),
-                s: .25 + .55 * E(),
-                r: 6 * E(),
+                x: 8.8 * (C() - .5),
+                z: 76 * (C() - .5),
+                s: .25 + .55 * C(),
+                r: 6 * C(),
                 y: .06
             });
             o(e[1], i), o(e[2], a);
             const r = [];
             for (const t of [ -1, 1 ]) for (let e = 0; e < 34; e++) r.push({
                 x: 6.88 * t,
-                z: (t < 0 ? 3 : -13) + 11 * (E() - .5),
-                y: .5 + 10 * E(),
-                s: .35 + .6 * E(),
-                r: 6 * E()
+                z: (t < 0 ? 3 : -13) + 11 * (C() - .5),
+                y: .5 + 10 * C(),
+                s: .35 + .6 * C(),
+                r: 6 * C()
             });
             o(e[1], r);
         }(), W(), tt = !0, n("city-status").textContent = "CALLE DEL OLIVO · 80 M · 2 EDIFICIOS COMPLETOS";
     }
-    let Fe = 0, Ge = 0;
+    let Ge = 0, Fe = 0;
     window.addEventListener("resize", () => {
         const t = Math.max(1, i.clientWidth), e = Math.max(1, i.clientHeight);
         l.aspect = t / e, l.updateProjectionMatrix(), d.setSize(t, e);
@@ -1042,31 +1047,31 @@
         zombies: kt,
         solids: g,
         blocked: x,
-        clearLine: v,
-        findPath: K,
+        clearLine: y,
+        findPath: J,
         spawnZombie: se,
         removeZombie: ue,
-        start: Ee,
+        start: Ce,
         shoot: xe,
         reload: de,
-        snapshot: ze,
+        snapshot: Ae,
         validSave: Se,
         saveGame: Le,
-        readSaves: Ae,
+        readSaves: ze,
         getState: () => ({
             hp: Dt,
-            ammo: Tt,
-            reserve: Ot,
+            ammo: Ot,
+            reserve: Tt,
             wave: Rt,
             kills: Pt,
             remaining: It,
-            paused: Gt,
-            reloading: Bt,
+            paused: Ft,
+            reloading: Vt,
             reloadLeft: Yt,
             mode: c.mode
         }),
-        setPaused: t => Gt = t,
-        setYaw: t => Ut = t,
+        setPaused: t => Ft = t,
+        setYaw: t => jt = t,
         updatePlayerCamera: Re,
         activeSounds: lt,
         sound: mt,
@@ -1074,53 +1079,57 @@
         moveZombie: ce,
         wakeAudio: ut,
         getPathBudget: () => Qt
-    }), oe(), function t() {
-        requestAnimationFrame(t);
-        const e = Et.getDelta(), o = Math.min(e, .05);
-        if (Qt = 0, Ft && !Gt) {
-            const t = Number(!!Lt.KeyW) - Number(!!Lt.KeyS), e = Number(!!Lt.KeyD) - Number(!!Lt.KeyA), i = Math.hypot(t, e) || 1, a = (Lt.ControlLeft || Lt.KeyC ? 2.2 : Lt.ShiftLeft ? 7 : 4.5) * o, s = (-Math.sin(Ut) * t + Math.cos(Ut) * e) / i * a, l = (-Math.cos(Ut) * t - Math.sin(Ut) * e) / i * a;
-            v(r.position.x, r.position.z, r.position.x + s, r.position.z, .38) && (r.position.x += s), v(r.position.x, r.position.z, r.position.x, r.position.z + l, .38) && (r.position.z += l), 
-            c.moving = !(!t && !e), Wt -= 15 * o, r.position.y += Wt * o;
+    }), oe(), function e() {
+        requestAnimationFrame(e);
+        const o = Ct.getDelta(), i = Math.min(o, .05);
+        if (Qt = 0, Gt && !Ft) {
+            const t = Number(!!Lt.KeyW) - Number(!!Lt.KeyS), e = Number(!!Lt.KeyD) - Number(!!Lt.KeyA), o = Math.hypot(t, e) || 1, a = (Lt.ControlLeft || Lt.KeyC ? 2.2 : Lt.ShiftLeft ? 7 : 4.5) * i, s = (-Math.sin(jt) * t + Math.cos(jt) * e) / o * a, l = (-Math.cos(jt) * t - Math.sin(jt) * e) / o * a;
+            y(r.position.x, r.position.z, r.position.x + s, r.position.z, .38) && (r.position.x += s), y(r.position.x, r.position.z, r.position.x, r.position.z + l, .38) && (r.position.z += l), 
+            c.moving = !(!t && !e), Wt -= 15 * i, r.position.y += Wt * i;
             const u = M(r.position.x, r.position.z);
-            if (r.position.y <= u ? (r.position.y = u, Wt = 0, qt = !0) : qt = !1, Re(o), function(t) {
-                if (Bt && (Yt -= t, Yt <= 0)) {
-                    const t = Math.min(12 - Tt, Ot);
-                    Tt += t, Ot -= t, Bt = !1, Yt = 0, oe();
+            if (r.position.y <= u ? (r.position.y = u, Wt = 0, qt = !0) : qt = !1, Re(i), function(t) {
+                if (Vt && (Yt -= t, Yt <= 0)) {
+                    const t = Math.min(12 - Ot, Tt);
+                    Ot += t, Tt -= t, Vt = !1, Yt = 0, oe();
                 }
-            }(o), gt(), $t += o, $t > 20 && (Le(!1), $t = 0), (t || e) && qt && (Xt -= o, Xt <= 0 && (mt("step"), Xt = Lt.ShiftLeft ? .32 : .48)), 
-            Nt -= o, It > 0 && Nt <= 0 && kt.length < ee[c.mode].limit) {
-                const t = H();
+            }(i), gt(), $t += i, $t > 20 && (Le(!1), $t = 0), (t || e) && qt && (Xt -= i, Xt <= 0 && (mt("step"), Xt = Lt.ShiftLeft ? .32 : .48)), 
+            Nt -= i, It > 0 && Nt <= 0 && kt.length < ee[c.mode].limit) {
+                const t = K();
                 if (t) {
                     se(t.x, t.z) && It--;
                 }
                 Nt = 1.15;
             }
-            "waves" === c.mode && 0 === It && 0 === kt.length ? (_t += o, _t > 2 && le()) : _t = 0;
+            "waves" === c.mode && 0 === It && 0 === kt.length ? (_t += i, _t > 2 && le()) : _t = 0;
             for (const t of [ ...kt ]) {
-                const e = ce(t, o);
+                const e = ce(t, i);
                 if (!kt.includes(t)) continue;
-                t.t += o * (e > 5e-4 ? 7 : 2), re(t, o, e);
-                const i = r.position.x - t.actor.position.x, a = r.position.z - t.actor.position.z, s = Math.hypot(i, a);
-                if (t.attack -= o, t.groan -= o, t.groan <= 0 && s < 15 && (mt("zombie", t), t.groan = 5 + 5 * Math.random()), 
-                s < 1.2 && Math.abs(r.position.y - t.actor.position.y) < 1.5 && t.attack <= 0 && v(t.actor.position.x, t.actor.position.z, r.position.x, r.position.z, .1) && (Dt -= 12, 
+                t.t += i * (e > 5e-4 ? 7 : 2), re(t, i, e);
+                const o = r.position.x - t.actor.position.x, a = r.position.z - t.actor.position.z, s = Math.hypot(o, a);
+                if (t.attack -= i, t.groan -= i, t.groan <= 0 && s < 15 && (mt("zombie", t), t.groan = 5 + 5 * Math.random()), 
+                s < 1.2 && Math.abs(r.position.y - t.actor.position.y) < 1.5 && t.attack <= 0 && y(t.actor.position.x, t.actor.position.z, r.position.x, r.position.z, .1) && (Dt -= 12, 
                 t.attack = 1.1, Dt > 0 && mt("hurt"), n("damage") && (n("damage").style.opacity = .3, setTimeout(() => {
                     n("damage").style.opacity = 0;
                 }, 150)), oe(), Dt <= 0)) {
-                    Ce();
+                    Ee();
                     break;
                 }
             }
-            Vt && document.pointerLockElement === d.domElement && xe(), Jt = Math.max(0, Jt - 1.1 * o), Mt.intensity = Math.max(0, Mt.intensity - 120 * o);
+            Bt && document.pointerLockElement === d.domElement && xe(), Ht = Math.max(0, Ht - 1.1 * i), Mt.intensity = Math.max(0, Mt.intensity - 120 * i);
         }
-        if (Fe++, Ge += e, Ge >= 1 && (n("fps") && (n("fps").textContent = n("showfps")?.checked ? Fe + " FPS" : ""), 
-        Fe = 0, Ge = 0), !Ft) {
-            r.visible = !0, vt.position.set(.3, 1.24, -.38), r.rotation.y = -.5, De.mixer && De.mixer.update(o);
-            const t = 6e-5 * performance.now();
-            l.position.set(r.position.x + 4 + 1.2 * Math.sin(t), r.position.y + 2.1, r.position.z + 5), l.lookAt(r.position.x, r.position.y + 1, r.position.z);
+        if (Ge++, Fe += o, Fe >= 1 && (n("fps") && (n("fps").textContent = n("showfps")?.checked ? Ge + " FPS" : ""), 
+        Ge = 0, Fe = 0), !Gt) {
+            if (r.visible = !0, yt.position.set(.3, 1.24, -.38), r.rotation.y = -.5, De.mixer && (De.mixer.update(i), De.hand)) {
+                r.updateMatrixWorld(!0);
+                const e = new t.Vector3;
+                De.hand.getWorldPosition(e), r.worldToLocal(e), yt.position.copy(e), yt.position.y += .025, yt.position.z -= .07;
+            }
+            const e = 6e-5 * performance.now();
+            l.position.set(r.position.x + 4 + 1.2 * Math.sin(e), r.position.y + 2.1, r.position.z + 5), l.lookAt(r.position.x, r.position.y + 1, r.position.z);
         }
         n("mode-name") && (n("mode-name").textContent = ee[c.mode].title), d.render(a, l);
     }(), async function() {
-        const e = [ Oe().catch(t => {
+        const e = [ Te().catch(t => {
             console.warn("Personaje provisional geométrico", t), n("asset-status").textContent = "PERSONAJE BÁSICO · FALLÓ EL GLB";
         }), _e().catch(t => {
             console.warn("MegaKit no disponible", t), n("city-status").textContent = "FALLO DE CARGA · CALLE INCOMPLETA";
@@ -1144,9 +1153,9 @@
         }
         try {
             et.gun = await Q("Armas 3D/pistola/9_mm.glb"), Pe(et.gun), function(e) {
-                bt && vt.remove(bt);
+                bt && yt.remove(bt);
                 const o = ot(e);
-                bt = new t.Group, vt.add(bt), bt.position.set(0, 0, -.08), bt.add(nt(o, .23, .32, .6)), yt.visible = !1, St();
+                bt = new t.Group, yt.add(bt), bt.position.set(0, 0, -.08), bt.add(nt(o, .23, .32, .6)), vt.visible = !1, St();
             }(et.gun);
         } catch (t) {
             console.warn("Pistola básica", t);
@@ -1161,12 +1170,12 @@
                     o.needsUpdate = !0;
                 }
             });
-            for (const t of y) t.g.add(nt(ot(et.car), 1.5, 2.1, 4.3)), t.low.visible = !1;
+            for (const t of v) t.g.add(nt(ot(et.car), 1.5, 2.1, 4.3)), t.low.visible = !1;
         } catch (t) {
             console.warn("Coche básico", t);
         }
         await Promise.allSettled(e), $ = tt && !!De.visual, n("loading").textContent = $ ? "LISTO · P PARA GUARDAR" : "ERROR · RECURSOS VISUALES INCOMPLETOS";
-    }().catch(console.error), console.log("DEAD ZONE · FASE 1 · TERCERA PERSONA");
+    }().catch(console.error), console.log("DEAD ZONE · CALLE DEL OLIVO · 80 M");
 })().catch(t => {
     console.error(t);
     const e = document.getElementById("loading");

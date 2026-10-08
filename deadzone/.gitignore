@@ -1,3 +1,6 @@
 node_modules/
 tests/fixtures/
 tests/results.txt
+
+# Intermediate packed building copies; production reuses original external .bin files
+assets/Building_*.glb

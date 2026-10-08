@@ -1,11 +1,9 @@
-# Calle del Olivo — recovery checkpoint
+# Calle del Olivo — recovered art sector
 
-Derived from phase-one commit e29b9109d3c8cf95b338222382e47776ca4bc853. Original source remains in backups/; phase-one branch remains unchanged.
+Derived from phase-one commit e29b9109d3c8cf95b338222382e47776ca4bc853. The original game remains in backups/, and the phase-one branch is unchanged. Recovery source checkpoint: c982de80d705043679eb1c54b862faf4900a7ed0.
 
-Implemented in source: one 80 m sector; two complete Quaternius buildings; normalized live asset bounds; deterministic cracks and debris; foliage instances; asphalt/concrete/dirt base-color, normal and roughness maps; directional shadow map; Soldier human with Idle/Walk/Run blending; existing combat/audio/navigation/save systems retained.
+Implemented: one 80 m sector, two complete Quaternius buildings, collision bounds taken from loaded geometry, deterministic cracks and debris, foliage instances, external 512px PBR maps, directional shadows, Soldier human with Idle/Walk/Run blending and gun position following the actual hand. Existing combat, owner-based audio cleanup, A* budget, separate exploration/wave modes and versioned saves are retained. Old city layout is replaced solely for this art study; the prototype apartment is preserved in the phase-one branch. New building interiors are not implemented here.
 
-The earlier binary upload failed before any asset was committed. Source currently refers to assets that still need publication. Do not describe this checkpoint as browser-ready.
+Production resources remain separate: two small glTF descriptors referencing the original existing .bin geometry, shared reduced textures, three small original vegetation GLBs. No model binary is embedded in HTML or JS. No purchases, and no raw Mixamo files are republished.
 
-18 logic tests pass with real geometry, real Three.js and real animation skeletons; browser renderer, DOM and audio are mocked. No screenshot of actual WebGL rendering has been verified. Local browser startup fails with socket permission denied; cloud browser cannot reach the local HTTP server. Chromebook performance unmeasured.
-
-Next: publish resources as separate external files, verify HTTP dependencies, rerun checks, inspect the actual WebGL scene. No purchases and no raw Mixamo files uploaded.
+18 logic tests pass in readable and delivery JS with real meshes/skeletons and mock renderer/DOM/audio. Runtime hand bone and Idle/Walk/Run checked. Textures/rendering/real audio are not exercised by those tests. No WebGL screenshot yet; local browser socket denied, cloud browser cannot reach localhost. Chromebook performance is unmeasured. Do not call the art direction visually approved.
