@@ -1,0 +1,43 @@
+<div id="game">
+  <div id="hud" class="hidden">
+    <div class="hudtop">
+      <div class="brand">DEAD<span>ZONE</span><small>SURVIVAL PROTOCOL</small></div>
+      <div class="wave">OLEADA <b id="wave">1</b><small>BAJAS <span id="kills">0</span></small></div>
+    </div>
+    <div id="crosshair">+</div>
+    <div id="hitmark">×</div>
+    <div id="damage"></div>
+    <div id="announcement"></div>
+    <div class="hudbottom">
+      <div><small>SALUD</small><strong id="health">100 ♥</strong></div>
+      <div class="right"><small id="weapon-name">PISTOLA · R RECARGAR</small><strong id="ammo">12 / 96</strong></div>
+    </div>
+  </div>
+  <div id="menu">
+    <div class="menubg"></div>
+    <div class="menucontent">
+      <div class="eyebrow">ZOMBIE SURVIVAL · BROWSER EDITION</div>
+      <h1>DEAD<span>ZONE</span></h1>
+      <p class="subtitle">LA CIUDAD HA CAÍDO. TÚ TODAVÍA NO.</p>
+      <section id="main-panel" class="panel">
+        <button id="new" class="primary">▶ NUEVA PARTIDA</button>
+        <button id="continue">▶ CONTINUAR</button>
+        <button id="load">▣ CARGAR PARTIDA</button>
+        <button id="options">⚙ OPCIONES</button>
+        <button id="credits">◈ CRÉDITOS</button>
+      </section>
+      <section id="options-panel" class="panel hidden">
+        <h2>CONFIGURACIÓN</h2>
+        <label>Calidad gráfica<select id="quality"><option value="low">Baja · Chromebook</option><option value="medium" selected>Media</option><option value="high">Alta</option></select></label>
+        <label>Campo de visión (FOV) <output id="fov-val">80</output><input id="fov" type="range" min="60" max="110" value="80"></label>
+        <label>Sensibilidad <output id="sens-val">0.25</output><input id="sens" type="range" min="0.05" max="1" step="0.05" value="0.25"></label>
+        <label>Volumen <output id="vol-val">60%</output><input id="vol" type="range" min="0" max="100" value="60"></label>
+        <label><span>Mostrar FPS</span><input id="showfps" type="checkbox"></label>
+        <button id="apply" class="primary">APLICAR</button><button class="back">← VOLVER</button>
+      </section>
+      <section id="load-panel" class="panel hidden"><h2>PARTIDAS GUARDADAS</h2><div id="saves"></div><button class="back">← VOLVER</button></section>
+      <section id="credits-panel" class="panel hidden"><h2>DEAD ZONE</h2><p>Un shooter de supervivencia 3D desarrollado con Three.js.</p><button class="back">← VOLVER</button></section>
+    </div>
+    <div class="menufooter">WASD MOVER · SHIFT CORRER · ESPACIO SALTAR · CTRL AGACHARSE · CLIC DISPARAR · R RECARGAR · ESC PAUSA</div>
+  </div><div id="fps"></div>
+</div>

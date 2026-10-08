@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="es">
+<head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>DEAD ZONE</title><link rel="stylesheet" href="style.css"></head>
+<body>
+<div id="game">
+  <div id="hud" class="hidden">
+    <div class="hudtop"><div class="brand">DEAD<span>ZONE</span><small id="mode-name">EXPLORACIÓN · PROTOTIPO</small></div><div class="wave">OLEADA <b id="wave">0</b><small>BAJAS <span id="kills">0</span></small></div></div>
+    <div id="crosshair">+</div><div id="hitmark">×</div><div id="damage"></div><div id="announcement"></div>
+    <div class="hudbottom"><div><small>SALUD</small><strong id="health">100 ♥</strong></div><div class="right"><small id="weapon-name">PISTOLA · R RECARGAR</small><strong id="ammo">12 / 96</strong></div></div>
+    <div class="hint">CLIC DERECHO APUNTAR · P GUARDAR · ESC PAUSA</div>
+  </div>
+  <div id="menu">
+    <div class="menubg"></div><div class="grain"></div>
+    <div class="menucontent">
+      <div class="eyebrow">47 DÍAS DESPUÉS DEL COLAPSO</div>
+      <h1>DEAD<span>ZONE</span></h1><p id="subtitle" class="subtitle">LA CIUDAD HA CAÍDO. TÚ TODAVÍA NO.</p>
+      <section id="main-panel" class="panel">
+        <button id="continue" class="primary">CONTINUAR</button>
+        <button id="new">NUEVA PARTIDA <small>EXPLORACIÓN · PROTOTIPO</small></button>
+        <button id="load">CARGAR PARTIDA</button>
+        <button id="waves">MODO OLEADAS</button>
+        <button id="options">OPCIONES</button><button id="credits">CRÉDITOS</button>
+      </section>
+      <section id="options-panel" class="panel hidden">
+        <h2>CONFIGURACIÓN</h2>
+        <label>Calidad gráfica<select id="quality"><option value="low" selected>Baja · Chromebook</option><option value="medium">Media</option><option value="high">Alta</option></select></label>
+        <label>Campo de visión <output id="fov-val">78</output><input id="fov" type="range" min="60" max="100" value="78"></label>
+        <label>Sensibilidad <output id="sens-val">0.25</output><input id="sens" type="range" min="0.05" max="1" step="0.05" value="0.25"></label>
+        <label>Volumen <output id="vol-val">60%</output><input id="vol" type="range" min="0" max="100" value="60"></label>
+        <label>Mostrar FPS<input id="showfps" type="checkbox"></label>
+        <button id="apply" class="primary">APLICAR</button><button class="back">VOLVER</button>
+      </section>
+      <section id="load-panel" class="panel hidden"><h2>PARTIDAS GUARDADAS</h2><div id="saves"></div><button class="back">VOLVER</button></section>
+      <section id="credits-panel" class="panel hidden">
+        <h2>DEAD ZONE</h2><p>Un juego de Naim / FliickzzzZ. Motor Three.js.</p>
+        <p>Personaje provisional: Cesium Man © 2017 Cesium, CC BY 4.0. Marca Cesium propiedad de su titular. Se conserva su apariencia original. Animación incluida en el modelo.</p>
+        <p>Ciudad: Downtown City MegaKit, Quaternius, CC0. Armas, zombis y audio: recursos aportados al repositorio del proyecto.</p>
+        <p>Esta fase incluye exploración de prueba y oleadas. La historia y los sistemas de supervivencia están pendientes.</p><button class="back">VOLVER</button>
+      </section>
+      <div class="status"><span id="loading">CARGANDO RECURSOS…</span><span id="asset-status">PREPARANDO PERSONAJE</span><span id="city-status">PREPARANDO ZONA URBANA</span></div>
+    </div>
+    <div class="menufooter">WASD MOVER · SHIFT CORRER · ESPACIO SALTAR · CTRL AGACHARSE<br>CLIC DISPARAR · CLIC DERECHO APUNTAR · R RECARGAR · P GUARDAR · ESC PAUSA</div>
+    <div class="edition">FASE 01<span>TERCERA PERSONA</span></div>
+  </div>
+  <div id="fps"></div>
+</div>
+<script src="game.js"></script>
+</body></html>
