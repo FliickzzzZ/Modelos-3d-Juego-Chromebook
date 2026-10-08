@@ -1,0 +1,195 @@
+{
+  "assets": [
+    {
+      "file": "car-diffuse.jpg",
+      "status": 200,
+      "bytes": 43919,
+      "matches": true
+    },
+    {
+      "file": "T_MetalConcrete_Normal.png",
+      "status": 200,
+      "bytes": 65577,
+      "matches": true
+    },
+    {
+      "file": "T_Dirt_Normal.png",
+      "status": 200,
+      "bytes": 580774,
+      "matches": true
+    },
+    {
+      "file": "Building_Small_1.gltf",
+      "status": 200,
+      "bytes": 20264,
+      "matches": true
+    },
+    {
+      "file": "T_RedBrick_BaseColor.png",
+      "status": 200,
+      "bytes": 202325,
+      "matches": true
+    },
+    {
+      "file": "T_MetalConcrete_BaseColor.png",
+      "status": 200,
+      "bytes": 134755,
+      "matches": true
+    },
+    {
+      "file": "T_dark_interior.png",
+      "status": 200,
+      "bytes": 310834,
+      "matches": true
+    },
+    {
+      "file": "T_MetalConcrete_ORM.png",
+      "status": 200,
+      "bytes": 140277,
+      "matches": true
+    },
+    {
+      "file": "T_Trim_Normal.png",
+      "status": 200,
+      "bytes": 232985,
+      "matches": true
+    },
+    {
+      "file": "T_lit_interior_2.png",
+      "status": 200,
+      "bytes": 299354,
+      "matches": true
+    },
+    {
+      "file": "T_Concrete_BaseColor.png",
+      "status": 200,
+      "bytes": 139782,
+      "matches": true
+    },
+    {
+      "file": "T_MarbleFloor_Normal.png",
+      "status": 200,
+      "bytes": 144103,
+      "matches": true
+    },
+    {
+      "file": "grass.glb",
+      "status": 200,
+      "bytes": 13504,
+      "matches": true
+    },
+    {
+      "file": "Building_Medium_2_001.gltf",
+      "status": 200,
+      "bytes": 18696,
+      "matches": true
+    },
+    {
+      "file": "T_Trim_ORM.png",
+      "status": 200,
+      "bytes": 153894,
+      "matches": true
+    },
+    {
+      "file": "T_Concrete_Normal.png",
+      "status": 200,
+      "bytes": 306150,
+      "matches": true
+    },
+    {
+      "file": "T_MarbleFloor_ORM.png",
+      "status": 200,
+      "bytes": 154279,
+      "matches": true
+    },
+    {
+      "file": "tree.glb",
+      "status": 200,
+      "bytes": 196948,
+      "matches": true
+    },
+    {
+      "file": "T_Dirt_ORM.png",
+      "status": 200,
+      "bytes": 99928,
+      "matches": true
+    },
+    {
+      "file": "T_Concrete_ORM.png",
+      "status": 200,
+      "bytes": 90288,
+      "matches": true
+    },
+    {
+      "file": "T_MarbleFloor_BaseColor.png",
+      "status": 200,
+      "bytes": 266827,
+      "matches": true
+    },
+    {
+      "file": "T_RedBrick_Normal.png",
+      "status": 200,
+      "bytes": 480156,
+      "matches": true
+    },
+    {
+      "file": "shrub.glb",
+      "status": 200,
+      "bytes": 52848,
+      "matches": true
+    },
+    {
+      "file": "T_Dirt_BaseColor.png",
+      "status": 200,
+      "bytes": 148392,
+      "matches": true
+    },
+    {
+      "file": "T_RedBrick_ORM.png",
+      "status": 200,
+      "bytes": 176900,
+      "matches": true
+    },
+    {
+      "file": "T_Concrete_Asphalt_BaseColor.png",
+      "status": 200,
+      "bytes": 103139,
+      "matches": true
+    },
+    {
+      "file": "T_Trim_BaseColor.png",
+      "status": 200,
+      "bytes": 283409,
+      "matches": true
+    },
+    {
+      "file": "foliage.png",
+      "status": 200,
+      "bytes": 8252,
+      "matches": true
+    },
+    {
+      "file": "T_lit_interior_1.png",
+      "status": 200,
+      "bytes": 381757,
+      "matches": true
+    }
+  ],
+  "externalGeometry": [
+    {
+      "url": "https://raw.githubusercontent.com/FliickzzzZ/Modelos-3d-Juego-Chromebook/a3b78f98c0684087175058e2cd899880dc7fcef3/Ciudad/Exports/glTF%20%28Godot%29/Building_Small_1.bin",
+      "status": 200,
+      "bytes": 1556100
+    },
+    {
+      "url": "https://raw.githubusercontent.com/FliickzzzZ/Modelos-3d-Juego-Chromebook/a3b78f98c0684087175058e2cd899880dc7fcef3/Ciudad/Exports/glTF%20%28Godot%29/Building_Medium_2_001.bin",
+      "status": 200,
+      "bytes": 2443288
+    },
+    {
+      "url": "https://cdn.jsdelivr.net/gh/mrdoob/three.js@r160/examples/models/gltf/Soldier.glb",
+      "status": 200,
+      "bytes": 2160468
+    }
+  ]
+}

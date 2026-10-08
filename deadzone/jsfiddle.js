@@ -62,7 +62,7 @@
         return !0;
     }
     const v = [];
-    function M(t, e) {
+    function b(t, e) {
         return Math.abs(t) > 4.9 && Math.abs(t) < 8.2 ? .22 : .06;
     }
     f(s, 0, -.2, 0, 44, .4, 80, m.ground).receiveShadow = !0;
@@ -77,13 +77,13 @@
             low: new t.Group
         }), w(e, o, 2.3, 4.6, 1.6);
     }
-    const b = h(4015424, .55), z = h(6178356, .25), A = h(7959915);
+    const M = h(4015424, .55), z = h(6178356, .25), A = h(7959915);
     function S(e, o, n, i, a, s, r) {
         const c = new t.Mesh(new t.CylinderGeometry(a, a, s, 7), r);
         return c.position.set(o, n, i), e.add(c), c.castShadow = !0, c;
     }
-    for (const [t, e] of [ [ 6.6, 23 ], [ -6.6, -6 ], [ 6.6, -31 ] ]) S(s, t, 2.75, e, .075, 5.5, b), f(s, t - .5, 5.48, e, 1, .08, .1, b), 
-    f(s, t - 1, 5.4, e, .65, .14, .35, b), w(t, e, .25, .25, 5.5);
+    for (const [t, e] of [ [ 6.6, 23 ], [ -6.6, -6 ], [ 6.6, -31 ] ]) S(s, t, 2.75, e, .075, 5.5, M), f(s, t - .5, 5.48, e, 1, .08, .1, M), 
+    f(s, t - 1, 5.4, e, .65, .14, .35, M), w(t, e, .25, .25, 5.5);
     const L = new t.LineBasicMaterial({
         color: 2370338
     });
@@ -110,7 +110,7 @@
         R.setMatrixAt(e, P);
     }
     R.userData.decorative = !0, s.add(R);
-    for (const [t, e] of [ [ -6.4, 19 ], [ 6.8, -2 ] ]) S(s, t, .55, e, .35, 1.1, b), S(s, t, 1.12, e, .39, .06, z);
+    for (const [t, e] of [ [ -6.4, 19 ], [ 6.8, -2 ] ]) S(s, t, .55, e, .35, 1.1, M), S(s, t, 1.12, e, .39, .06, z);
     const I = document.createElement("canvas");
     I.width = 512, I.height = 256;
     const N = I.getContext("2d");
@@ -121,7 +121,7 @@
     _.colorSpace = t.SRGBColorSpace, f(s, -6.8, 2.8, 28, 2.2, 1.1, .06, new t.MeshStandardMaterial({
         map: _,
         roughness: 1
-    })), S(s, -6.8, 1.3, 28, .04, 2.6, b);
+    })), S(s, -6.8, 1.3, 28, .04, 2.6, M);
     const G = -40, F = Math.round(40) + 1, V = .48, B = new Uint8Array(F * F);
     function j(t, e) {
         return e * F + t;
@@ -260,12 +260,12 @@
         }
         w.reverse();
         const v = [];
-        let M = t, b = e, z = 0;
+        let b = t, M = e, z = 0;
         for (;z < w.length; ) {
             let t = z;
-            for (let e = z + 1; e < w.length && y(M, b, w[e].x, w[e].z, V); e++) t = e;
+            for (let e = z + 1; e < w.length && y(b, M, w[e].x, w[e].z, V); e++) t = e;
             const e = w[t];
-            v.push(e), M = e.x, b = e.z, z = t + 1;
+            v.push(e), b = e.x, M = e.z, z = t + 1;
         }
         return v;
     }
@@ -451,12 +451,12 @@
     const vt = new t.Group;
     yt.add(vt), f(vt, 0, 0, -.26, .19, .2, .63, h(1514012, .7)), f(vt, 0, -.17, -.04, .13, .32, .17, h(2697772)), 
     f(vt, 0, .09, -.48, .1, .07, .3, h(1514012, .7));
-    const Mt = new t.PointLight(16760169, 0, 5);
-    Mt.position.set(0, 0, -.8), yt.add(Mt);
-    let bt = null, zt = 0;
+    const bt = new t.PointLight(16760169, 0, 5);
+    bt.position.set(0, 0, -.8), yt.add(bt);
+    let Mt = null, zt = 0;
     const At = [ [ 0, 0, 0 ], [ 0, Math.PI, 0 ], [ 0, Math.PI / 2, 0 ], [ 0, -Math.PI / 2, 0 ], [ Math.PI / 2, 0, 0 ], [ -Math.PI / 2, 0, 0 ], [ 0, 0, Math.PI / 2 ], [ 0, 0, -Math.PI / 2 ] ];
     function St() {
-        bt && (bt.rotation.set(...At[zt]), console.log("Pistola orientación", zt + 1, "/", At.length));
+        Mt && (Mt.rotation.set(...At[zt]), console.log("Pistola orientación", zt + 1, "/", At.length));
     }
     const Lt = {}, kt = [], Ct = new t.Clock, Et = new t.Raycaster;
     let Dt = 100, Ot = 12, Tt = 96, Rt = 0, Pt = 0, It = 0, Nt = 0, _t = 0, Gt = !1, Ft = !1, Vt = !1, Bt = !1, jt = 0, Ut = 0, Wt = 0, qt = !0, Zt = 0, Ht = 0, Jt = 0, Kt = .25, Xt = 0, Yt = 0, Qt = 0, $t = 0, te = !1;
@@ -500,7 +500,7 @@
             if (x(e = n.x, o = n.z, .55)) return null;
         }
         const n = new t.Group;
-        n.position.set(e, M(e), o), a.add(n);
+        n.position.set(e, b(e), o), a.add(n);
         const i = ae();
         n.add(i.g);
         let s = null, r = null, c = null, l = null, d = null;
@@ -601,7 +601,7 @@
             const o = Math.min(t.speed * e, h), n = i + d / h * o, s = a + u / h * o;
             let r = i, c = a;
             y(i, a, n, a, V) && (r = n), y(r, a, r, s, V) && (c = s), r === i && c === a && y(i, a, n, s, V) && (r = n, c = s), 
-            t.actor.position.x = r, t.actor.position.z = c, t.actor.position.y = M(r), p = Math.hypot(r - i, c - a);
+            t.actor.position.x = r, t.actor.position.z = c, t.actor.position.y = b(r), p = Math.hypot(r - i, c - a);
             const l = p > 5e-4 ? r - i : d, m = p > 5e-4 ? c - a : u;
             let f = Math.atan2(l, m) - t.actor.rotation.y;
             f = Math.atan2(Math.sin(f), Math.cos(f)), t.actor.rotation.y += f * Math.min(1, 9 * e);
@@ -609,7 +609,7 @@
         if (p < .003 && s > 1.5 ? t.stuckTime += e : t.stuckTime = Math.max(0, t.stuckTime - 2 * e), t.stuckTime > 1.3 && !t.pathFailed && (t.pathTimer = Math.min(t.pathTimer, .2)), 
         t.stuckTime > 7) {
             const e = K();
-            if (e) t.actor.position.set(e.x, M(e.x, e.z), e.z), t.path = [], t.pathTimer = 0, t.pathFailed = !1, t.stuckTime = 0, 
+            if (e) t.actor.position.set(e.x, b(e.x, e.z), e.z), t.path = [], t.pathTimer = 0, t.pathFailed = !1, t.stuckTime = 0, 
             console.warn("Zombi atascado recolocado", e); else {
                 ue(t);
                 const e = kt.indexOf(t);
@@ -640,12 +640,12 @@
         const e = performance.now();
         if (e - Zt < 235) return;
         if (Ot <= 0) return void de();
-        Zt = e, Ot--, Ht = .13, Mt.intensity = 8, mt("shot"), a.updateMatrixWorld(!0), Et.setFromCamera(new t.Vector2, l), 
+        Zt = e, Ot--, Ht = .13, bt.intensity = 8, mt("shot"), a.updateMatrixWorld(!0), Et.setFromCamera(new t.Vector2, l), 
         Et.far = 65;
         const o = we(Et);
         let i = Et.intersectObjects(kt.flatMap(t => t.hit), !1)[0];
         o && (!i || o.distance < i.distance) && (i = null), ge.copy(Et.ray.origin).addScaledVector(Et.ray.direction, o ? o.distance : 65), 
-        i && ge.copy(i.point), Mt.getWorldPosition(fe), me.subVectors(ge, fe);
+        i && ge.copy(i.point), bt.getWorldPosition(fe), me.subVectors(ge, fe);
         const s = me.length();
         me.normalize(), he.set(fe, me), he.far = s + .02;
         const r = we(he), c = he.intersectObjects(kt.flatMap(t => t.hit), !1)[0];
@@ -662,13 +662,13 @@
     function ve() {
         n("menu")?.classList.remove("hidden"), ye("main");
     }
-    function Me() {
+    function be() {
         n("menu")?.classList.add("hidden");
     }
-    const be = "deadzone-save-v3";
+    const Me = "deadzone-save-v3";
     function ze() {
         try {
-            const t = JSON.parse(localStorage.getItem(be));
+            const t = JSON.parse(localStorage.getItem(Me));
             return 3 === t?.version && Array.isArray(t.slots) ? t.slots : [];
         } catch {
             return [];
@@ -725,7 +725,7 @@
     function Le(t = !0) {
         if (Gt) try {
             const e = Ae(), o = ze().filter(t => t.mode !== e.mode);
-            o.unshift(e), localStorage.setItem(be, JSON.stringify({
+            o.unshift(e), localStorage.setItem(Me, JSON.stringify({
                 version: 3,
                 slots: o
             })), t && ie("PARTIDA GUARDADA");
@@ -749,7 +749,7 @@
             for (const t of [ ...kt ]) ue(t);
             if (Object.keys(Lt).forEach(t => Lt[t] = !1), c.mode = t, Dt = 100, Ot = 12, Tt = 96, Rt = 0, Pt = 0, It = 0, 
             Nt = 0, _t = 0, jt = 0, Ut = 0, Wt = 0, qt = !0, Vt = !1, Yt = 0, Gt = !0, Ft = !1, Bt = !1, te = !1, Zt = 0, 
-            Ht = 0, r.position.set(0, M(0), 30), r.visible = !0, n("hud").classList.remove("hidden"), e && Se(e)) {
+            Ht = 0, r.position.set(0, b(0), 30), r.visible = !0, n("hud").classList.remove("hidden"), e && Se(e)) {
                 if ("olivo-80-v1" === e.sector && Array.isArray(e.map) && e.map.length === g.length && e.map.every(t => [ t.x, t.z, t.w, t.d, t.h ].every(Number.isFinite) && t.w > 0 && t.d > 0)) {
                     g.splice(0, g.length, ...e.map.map(t => ({
                         ...t
@@ -767,7 +767,7 @@
                 }
                 Dt = e.hp, Ot = e.ammo, Tt = e.reserve, Rt = e.wave, Pt = e.kills, It = Math.max(0, Math.min(1e5, Number(e.remaining) || 0)), 
                 Nt = Math.max(0, Number(e.spawnWait) || 0), _t = Math.max(0, Number(e.between) || 0), jt = e.yaw, Ut = Math.max(-1.2, Math.min(1.2, e.pitch)), 
-                x(e.x, e.z) || r.position.set(e.x, Math.max(M(e.x, e.z), Number(e.y) || 0), e.z), Wt = Number.isFinite(e.vy) ? e.vy : 0, 
+                x(e.x, e.z) || r.position.set(e.x, Math.max(b(e.x, e.z), Number(e.y) || 0), e.z), Wt = Number.isFinite(e.vy) ? e.vy : 0, 
                 qt = !!e.grounded, Vt = !!e.reloading, Yt = Math.max(0, Math.min(1.15, Number(e.reloadLeft) || 0));
                 for (const o of e.zombies) {
                     if (x(o.x, o.z, .48)) {
@@ -779,7 +779,7 @@
                 }
             } else "waves" === t ? le() : (It = 6, ie("DÍA 47 · ZONA DE PRUEBAS"));
             $t = 0, n("continue").textContent = "CONTINUAR", n("subtitle").textContent = "LA CIUDAD HA CAÍDO. TÚ TODAVÍA NO.", 
-            Me(), oe(), ut(), Re(1, !0), ke();
+            be(), oe(), ut(), Re(1, !0), ke();
         } else n("loading").textContent = "ESPERA · RECURSOS EN CARGA";
     }
     function Ee() {
@@ -791,7 +791,7 @@
             const t = ze().find(Se);
             return void (t ? Ce(t.mode, t) : Ce(c.mode));
         }
-        Me(), n("subtitle").textContent = "LA CIUDAD HA CAÍDO. TÚ TODAVÍA NO.", ut(), ke();
+        be(), n("subtitle").textContent = "LA CIUDAD HA CAÍDO. TÚ TODAVÍA NO.", ut(), ke();
     }, n("options").onclick = () => ye("options"), n("credits").onclick = () => ye("credits"), n("load").onclick = () => {
         ye("load");
         const t = n("saves");
@@ -853,7 +853,7 @@
     }), document.addEventListener("mouseup", t => {
         0 === t.button && (Bt = !1), 2 === t.button && (te = !1);
     }), d.domElement.addEventListener("contextmenu", t => t.preventDefault()), document.addEventListener("pointerlockchange", () => {
-        if (Gt) if (document.pointerLockElement === d.domElement) Ft = !1, Me(), wt(); else {
+        if (Gt) if (document.pointerLockElement === d.domElement) Ft = !1, be(), wt(); else {
             Ft = !0, Bt = !1, te = !1, ht(), wt(), Object.keys(Lt).forEach(t => Lt[t] = !1), Le(!1), ve();
             const t = n("menu")?.querySelector(".subtitle");
             t && (t.textContent = "PARTIDA EN PAUSA");
@@ -928,7 +928,7 @@
     r.add(Oe.g), Oe.g.traverse(t => {
         t.isMesh && (t.material = h(t.position.y > 1.4 ? 10058340 : 4541767));
     });
-    const Ie = t => "https://raw.githubusercontent.com/FliickzzzZ/Modelos-3d-Juego-Chromebook/deadzone/art-street-80m/deadzone/assets/" + t;
+    const Ie = t => "https://raw.githubusercontent.com/FliickzzzZ/Modelos-3d-Juego-Chromebook/47153cbc0a9692cc0bdb66f962e51c263641e655/deadzone/assets/" + t;
     async function Ne(e, o, n, i, a) {
         const s = new t.TextureLoader, r = await Promise.all([ o, n, i ].map(t => t ? s.loadAsync(Ie(t)) : null));
         for (let e = 0; e < r.length; e++) {
@@ -1086,7 +1086,7 @@
             const t = Number(!!Lt.KeyW) - Number(!!Lt.KeyS), e = Number(!!Lt.KeyD) - Number(!!Lt.KeyA), o = Math.hypot(t, e) || 1, a = (Lt.ControlLeft || Lt.KeyC ? 2.2 : Lt.ShiftLeft ? 7 : 4.5) * i, s = (-Math.sin(jt) * t + Math.cos(jt) * e) / o * a, l = (-Math.cos(jt) * t - Math.sin(jt) * e) / o * a;
             y(r.position.x, r.position.z, r.position.x + s, r.position.z, .38) && (r.position.x += s), y(r.position.x, r.position.z, r.position.x, r.position.z + l, .38) && (r.position.z += l), 
             c.moving = !(!t && !e), Wt -= 15 * i, r.position.y += Wt * i;
-            const u = M(r.position.x, r.position.z);
+            const u = b(r.position.x, r.position.z);
             if (r.position.y <= u ? (r.position.y = u, Wt = 0, qt = !0) : qt = !1, Re(i), function(t) {
                 if (Vt && (Yt -= t, Yt <= 0)) {
                     const t = Math.min(12 - Ot, Tt);
@@ -1115,7 +1115,7 @@
                     break;
                 }
             }
-            Bt && document.pointerLockElement === d.domElement && xe(), Ht = Math.max(0, Ht - 1.1 * i), Mt.intensity = Math.max(0, Mt.intensity - 120 * i);
+            Bt && document.pointerLockElement === d.domElement && xe(), Ht = Math.max(0, Ht - 1.1 * i), bt.intensity = Math.max(0, bt.intensity - 120 * i);
         }
         if (Ge++, Fe += o, Fe >= 1 && (n("fps") && (n("fps").textContent = n("showfps")?.checked ? Ge + " FPS" : ""), 
         Ge = 0, Fe = 0), !Gt) {
@@ -1153,9 +1153,9 @@
         }
         try {
             et.gun = await Q("Armas 3D/pistola/9_mm.glb"), Pe(et.gun), function(e) {
-                bt && yt.remove(bt);
+                Mt && yt.remove(Mt);
                 const o = ot(e);
-                bt = new t.Group, yt.add(bt), bt.position.set(0, 0, -.08), bt.add(nt(o, .23, .32, .6)), vt.visible = !1, St();
+                Mt = new t.Group, yt.add(Mt), Mt.position.set(0, 0, -.08), Mt.add(nt(o, .23, .32, .6)), vt.visible = !1, St();
             }(et.gun);
         } catch (t) {
             console.warn("Pistola básica", t);

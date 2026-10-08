@@ -1191,7 +1191,7 @@ function optimizeTextures(asset){asset.scene.traverse(o=>{if(!o.isMesh)return;fo
   for(const key of ["map","normalMap","roughnessMap","metalnessMap","aoMap"]){const t=material[key],img=t?.image;if(!img||t.userData.reduced)continue;
     t.userData.reduced=true;if(Math.max(img.width,img.height)>512){const c=document.createElement("canvas"),ratio=512/Math.max(img.width,img.height);c.width=Math.max(1,Math.round(img.width*ratio));c.height=Math.max(1,Math.round(img.height*ratio));c.getContext("2d").drawImage(img,0,0,c.width,c.height);t.image=c;t.needsUpdate=true;}}
 }});}
-const ART_BASE="https://raw.githubusercontent.com/FliickzzzZ/Modelos-3d-Juego-Chromebook/deadzone/art-street-80m/deadzone/assets/";
+const ART_BASE="https://raw.githubusercontent.com/FliickzzzZ/Modelos-3d-Juego-Chromebook/47153cbc0a9692cc0bdb66f962e51c263641e655/deadzone/assets/";
 const artURL=name=>ART_BASE+name;
 async function pbr(material,base,normal,orm,repeat){
  const loader=new T.TextureLoader();const maps=await Promise.all([base,normal,orm].map(n=>n?loader.loadAsync(artURL(n)):null));
