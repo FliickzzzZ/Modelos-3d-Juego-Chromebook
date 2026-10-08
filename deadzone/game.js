@@ -11,8 +11,8 @@ const scene = new T.Scene();
 const world = new T.Group(); scene.add(world);
 const player = new T.Group(); scene.add(player);
 const playerState = {position: player.position, mode: "explore", moving: false};
-scene.background = new T.Color(0x25323b);
-scene.fog = new T.FogExp2(0x25323b, .012);
+scene.background = new T.Color(0x7c8983);
+scene.fog = new T.FogExp2(0x7c8983, .018);
 const camera = new T.PerspectiveCamera(
   78,
   Math.max(1, root.clientWidth) / Math.max(1, root.clientHeight),
@@ -31,12 +31,13 @@ renderer.setSize(
 );
 renderer.outputColorSpace = T.SRGBColorSpace;
 renderer.toneMapping = T.ACESFilmicToneMapping;
-renderer.toneMappingExposure = 1.4;
+renderer.toneMappingExposure = 1.05;
 root.prepend(renderer.domElement);
 scene.add(camera);
-scene.add(new T.HemisphereLight(0xc0d4e5, 0x343434, 2.6));
-const sun = new T.DirectionalLight(0xffd2a4, 2);
-sun.position.set(-35, 60, -20);
+renderer.shadowMap.enabled=true;renderer.shadowMap.type=T.PCFSoftShadowMap;
+scene.add(new T.HemisphereLight(0xc0d4cf,0x343828,1.35));
+const sun = new T.DirectionalLight(0xffead0, 2.1);
+sun.position.set(-18,30,15);sun.castShadow=true;sun.shadow.mapSize.set(1024,1024);sun.shadow.camera.left=-25;sun.shadow.camera.right=25;sun.shadow.camera.top=44;sun.shadow.camera.bottom=-44;sun.shadow.camera.near=1;sun.shadow.camera.far=90;sun.shadow.normalBias=.045;sun.shadow.bias=-.0002;
 scene.add(sun);
 const mat = (c, metal = 0) =>
   new T.MeshStandardMaterial({
@@ -67,8 +68,8 @@ const addSolid = (x, z, w, d, h = 3) =>
   solids.push({ x, z, w, d, h });
 function blocked(x, z, radius = .38) {
   return (
-    Math.abs(x) > 88 - radius ||
-    Math.abs(z) > 88 - radius ||
+    Math.abs(x) > 22 - radius ||
+    Math.abs(z) > 40 - radius ||
     solids.some(o =>
       Math.abs(x - o.x) < o.w / 2 + radius &&
       Math.abs(z - o.z) < o.d / 2 + radius
@@ -86,118 +87,44 @@ function clearLine(ax, az, bx, bz, radius = .48) {
   }
   return true;
 }
-box(world, 0, -.18, 0, 190, .36, 190, m.ground);
-for (let i = -2; i <= 2; i++) {
-  const p = i * 30;
-  box(world, p, .02, 0, 11, .05, 190, m.road);
-  box(world, 0, .025, p, 190, .05, 11, m.road);
-  for (let j = -85; j < 85; j += 9) {
-    box(world, p, .058, j, .13, .01, 3, m.line);
-    box(world, j, .058, p, 3, .01, .13, m.line);
-  }
+// One 80 m art validation sector. Complete buildings loaded below, no box facades.
+const cityPanels=[];
+const cars=[];
+function groundHeight(x,z){return Math.abs(x)>4.9&&Math.abs(x)<8.2?.22:.06;}
+box(world,0,-.2,0,44,.4,80,m.ground).receiveShadow=true;
+const road=box(world,0,.025,0,9.8,.05,80,m.road);road.receiveShadow=true;
+for(const side of [-1,1]){
+  box(world,side*6.55,.11,0,3.3,.22,80,m.walk).receiveShadow=true;
+  box(world,side*5.05,.14,0,.22,.28,80,m.walk);
 }
-const walls = [
-  0x62615f,
-  0x575c5e,
-  0x716962,
-  0x4c565b
-].map(c => mat(c));
-const cityPanels = [];
-function room(g,x,z,w,d) {
-  function wall(lx,lz,ww,dd) {
-    const mesh=box(g,lx,1.8,lz,ww,3.2,dd,walls[0]);
-    cityPanels.push({g,mesh,lx,lz,ww,dd}); addSolid(x+lx,z+lz,ww,dd,3.4);
-  }
-  wall(0,-d/2,w,.25); wall(0,d/2,w,.25); wall(w/2,0,.25,d);
-  wall(-w/2,-2.35,.25,2.5); wall(-w/2,2.35,.25,2.5);
-  box(g,-w/2,3,0,.25,.8,2.2,m.dark);
-  box(g,0,3.55,0,w+.2,.25,d+.2,m.dark);
-  box(g,1,.65,1,2,.7,.8,m.cloth); addSolid(x+1,z+1,2,.8,1);
-  box(g,-1,.7,-1,1.2,.85,.65,m.dark); addSolid(x-1,z-1,1.2,.65,1.2);
-  const lamp = new T.PointLight(0xffbf75,2.5,9); lamp.position.set(0,2.6,0);g.add(lamp);
+for(let z=-37;z<40;z+=7)box(world,0,.058,z,.09,.008,2.1,m.line);
+// Fixed bounds reserved before async loading; matches normalized asset footprints.
+addSolid(-13,3,12.4,12.6,17);addSolid(13,-13,12.4,14.3,21);
+for(const [x,z,rot] of [[3.2,14,.1],[-3.2,-14,-.12],[3.3,-29,.2]]){
+  const g=new T.Group();g.position.set(x,.06,z);g.rotation.y=rot;world.add(g);cars.push({g,low:new T.Group()});addSolid(x,z,2.3,4.6,1.6);
 }
-function groundHeight(x,z) {
-  for(let ix=-2;ix<2;ix++) for(let iz=-2;iz<2;iz++)
-    if(Math.abs(x-(ix*30+15))<9.5 && Math.abs(z-(iz*30+15))<9.5) return .26;
-  return .06;
+// Props are deliberately modeled as fixtures, never substitute buildings.
+const propMetal=mat(0x3d4540,.55),rust=mat(0x5e4634,.25),debris=mat(0x79756b);
+function cylinder(parent,x,y,z,r,h,material){const mesh=new T.Mesh(new T.CylinderGeometry(r,r,h,7),material);mesh.position.set(x,y,z);parent.add(mesh);mesh.castShadow=true;return mesh;}
+for(const [x,z] of [[6.6,23],[-6.6,-6],[6.6,-31]]){
+ cylinder(world,x,2.75,z,.075,5.5,propMetal);box(world,x-.5,5.48,z,1,.08,.1,propMetal);box(world,x-1,5.4,z,.65,.14,.35,propMetal);
+ addSolid(x,z,.25,.25,5.5);
 }
-function building(x, z, w, d, h) {
-  const g = new T.Group();
-  g.position.set(x, 0, z);
-  world.add(g);g.userData.building=true;g.userData.height=h;
-  if (Math.abs(x - 10.1) < .01 && Math.abs(z - 10.1) < .01) {
-    g.userData.building=false;room(g, x, z, w, d); return;
-  }
-  box(
-    g, 0, h / 2, 0, w, h, d,
-    walls[Math.floor(Math.random() * walls.length)]
-  );
-  box(g, 0, h + .12, 0, w + .4, .24, d + .4, m.dark);
-  for (let y = 2; y < h - 1; y += 3) {
-    for (let a = -w / 2 + 1.3; a < w / 2 - .4; a += 2.5) {
-      box(g, a, y, d / 2 + .03, 1.1, 1.45, .05, m.glass);
-      box(g, a, y, -d / 2 - .03, 1.1, 1.45, .05, m.glass);
-    }
-  }
-  addSolid(x, z, w, d, h);
-}
-for (let x = -2; x < 2; x++) {
-  for (let z = -2; z < 2; z++) {
-    const cx = x * 30 + 15;
-    const cz = z * 30 + 15;
-    box(world, cx, .13, cz, 19, .26, 19, m.walk);
-    for (const a of [-1, 1]) {
-      for (const b of [-1, 1]) {
-        building(
-          cx + a * 4.9,
-          cz + b * 4.9,
-          7.2,
-          7.2,
-          9 + Math.floor(Math.random() * 13)
-        );
-      }
-    }
-  }
-}
-const cars = [];
-function car(x, z, rot) {
-  const g = new T.Group();
-  g.position.set(x, 0, z);
-  g.rotation.y = rot;
-  world.add(g);
-  const low = new T.Group();
-  g.add(low);
-  const paint = mat(
-    [0x72312c, 0x4c5868, 0x5d625e][
-      Math.floor(Math.random() * 3)
-    ]
-  );
-  box(low, 0, .62, 0, 1.85, .6, 3.8, paint);
-  box(low, 0, 1.16, -.15, 1.6, .6, 2, paint);
-  for (const a of [-1, 1]) {
-    for (const b of [-1, 1]) {
-      const wheel = new T.Mesh(
-        new T.CylinderGeometry(.36, .36, .19, 10),
-        m.dark
-      );
-      wheel.rotation.z = Math.PI / 2;
-      wheel.position.set(a * .98, .36, b * 1.25);
-      low.add(wheel);
-    }
-  }
-  cars.push({ g, low });
-  addSolid(x, z, 4.3, 4.3);
-}
-for (let i = 0; i < 15; i++) {
-  const x = [-60, -30, 0, 30, 60][i % 5];
-  const z = -70 + Math.floor(i / 5) * 55 + Math.random() * 8;
-  if (Math.hypot(x, z) > 12) {
-    car(x, z, i % 2 ? 0 : Math.PI / 2);
-  }
-}
+// Fine cracks and fragmented paving, unlit strokes sit above textured asphalt.
+const crackMaterial=new T.LineBasicMaterial({color:0x242b22});let seed=47;
+function rnd(){seed=(seed*1664525+1013904223)>>>0;return seed/4294967296;}
+const crackPositions=[];
+for(let i=0;i<95;i++){let x=(rnd()-.5)*9,z=(rnd()-.5)*78;for(let j=0;j<5;j++){const nx=x+(rnd()-.5)*.7,nz=z+rnd()*.5;crackPositions.push(x,.058,z,nx,.058,nz);x=nx;z=nz;}}
+const cg=new T.BufferGeometry();cg.setAttribute('position',new T.Float32BufferAttribute(crackPositions,3));const cracks=new T.LineSegments(cg,crackMaterial);cracks.userData.decorative=true;world.add(cracks);
+const rubbleGeo=new T.DodecahedronGeometry(1,0),rubble=new T.InstancedMesh(rubbleGeo,debris,65),matrix=new T.Matrix4();
+for(let i=0;i<65;i++){const x=(rnd()>.5?1:-1)*(4.4+rnd()*2),z=(rnd()-.5)*78;matrix.compose(new T.Vector3(x,.09,z),new T.Quaternion().setFromEuler(new T.Euler(rnd(),rnd()*6,rnd())),new T.Vector3(.06+rnd()*.19,.035+rnd()*.12,.06+rnd()*.17));rubble.setMatrixAt(i,matrix);}rubble.userData.decorative=true;world.add(rubble);
+for(const [x,z] of [[-6.4,19],[6.8,-2]]){cylinder(world,x,.55,z,.35,1.1,propMetal);cylinder(world,x,1.12,z,.39,.06,rust);}
+const signCanvas=document.createElement('canvas');signCanvas.width=512;signCanvas.height=256;const sc=signCanvas.getContext('2d');
+if(sc){sc.fillStyle='#29403a';sc.fillRect(0,0,512,256);sc.strokeStyle='#bfc3a7';sc.lineWidth=10;sc.strokeRect(12,12,488,232);sc.fillStyle='#d4d1b8';sc.font='bold 44px Arial';sc.textAlign='center';sc.fillText('CALLE DEL OLIVO',256,110);sc.font='27px Arial';sc.fillText('ACCESO RESTRINGIDO',256,175);}
+const signMap=new T.CanvasTexture(signCanvas);signMap.colorSpace=T.SRGBColorSpace;box(world,-6.8,2.8,28,2.2,1.1,.06,new T.MeshStandardMaterial({map:signMap,roughness:1}));cylinder(world,-6.8,1.3,28,.04,2.6,propMetal);
 const NAV_STEP = 2;
-const NAV_MIN = -86;
-const NAV_MAX = 86;
+const NAV_MIN = -40;
+const NAV_MAX = 40;
 const NAV_SIZE = Math.round((NAV_MAX - NAV_MIN) / NAV_STEP) + 1;
 const NAV_RADIUS = .48;
 const navGrid = new Uint8Array(NAV_SIZE * NAV_SIZE);
@@ -444,6 +371,7 @@ const load = p =>
   new Promise((ok, no) =>
     gltf.load(url(p), ok, undefined, no)
   );
+let assetsReady=false;let cityReady=false;
 const assets = {
   zombies: [],
   gun: null,
@@ -1010,7 +938,7 @@ function removeZombie(z){stopSounds(z);scene.remove(z.actor);z.mixer?.stopAllAct
 }
 const shotRay=new T.Raycaster(),cameraRay=new T.Raycaster();
 const tmpDir=new T.Vector3(),tmpOrigin=new T.Vector3(),tmpTarget=new T.Vector3();
-function firstWorldHit(cast){return cast.intersectObject(world,true)[0];}
+function firstWorldHit(cast){return cast.intersectObjects(world.children.filter(o=>!o.userData.decorative),true).find(h=>!h.object.userData.decorative);}
 function shoot(){
   if(!alive||paused||reloading)return;const now=performance.now();if(now-lastShot<235)return;
   if(ammo<=0){reload();return;}lastShot=now;ammo--;recoil=.13;flash.intensity=8;sound("shot");
@@ -1052,7 +980,7 @@ function hideMenu() {
 }
 const SAVE_KEY="deadzone-save-v3";
 function readSaves(){try{const d=JSON.parse(localStorage.getItem(SAVE_KEY));return d?.version===3&&Array.isArray(d.slots)?d.slots:[];}catch{return[];}}
-function snapshot(){return{mode:playerState.mode,hp,ammo,reserve,wave,kills,remaining,spawnWait,between,reloading,reloadLeft,x:player.position.x,y:player.position.y,z:player.position.z,yaw,pitch,vy,grounded,
+function snapshot(){return{sector:"olivo-80-v1",mode:playerState.mode,hp,ammo,reserve,wave,kills,remaining,spawnWait,between,reloading,reloadLeft,x:player.position.x,y:player.position.y,z:player.position.z,yaw,pitch,vy,grounded,
   map:solids.map(o=>({...o})),buildings:world.children.filter(g=>g.userData.building).map(g=>({x:g.position.x,z:g.position.z,h:g.userData.height})),
   cars:cars.map(c=>({x:c.g.position.x,z:c.g.position.z,rot:c.g.rotation.y})),
   zombies:zombies.map(z=>({x:z.actor.position.x,z:z.actor.position.z,hp:z.hp,speed:z.speed,attack:z.attack,groan:z.groan})),date:Date.now()};}
@@ -1060,13 +988,14 @@ function validSave(d){return d&&["waves","explore"].includes(d.mode)&&[d.hp,d.am
 function saveGame(notice=true){if(!alive)return;try{const d=snapshot(),slots=readSaves().filter(s=>s.mode!==d.mode);slots.unshift(d);localStorage.setItem(SAVE_KEY,JSON.stringify({version:3,slots}));if(notice)announce("PARTIDA GUARDADA");}catch{if(notice)announce("NO SE PUDO GUARDAR");}}
 function requestLock(){try{const result=renderer.domElement.requestPointerLock?.();result?.catch(()=>{paused=true;showMenu();announce("CLIC EN CONTINUAR PARA JUGAR");});}catch{paused=true;showMenu();}}
 function start(mode="explore",data=null){
+  if(!assetsReady){$("loading").textContent="ESPERA · RECURSOS EN CARGA";return;}
   session++;stopSounds();for(const z of [...zombies])removeZombie(z);
   Object.keys(keys).forEach(k=>keys[k]=false);playerState.mode=mode;
   hp=100;ammo=12;reserve=96;wave=0;kills=0;remaining=0;spawnWait=0;between=0;yaw=0;pitch=0;vy=0;grounded=true;
   reloading=false;reloadLeft=0;alive=true;paused=false;shootHeld=false;aimHeld=false;lastShot=0;recoil=0;
-  player.position.set(0,groundHeight(0,0),0);player.visible=true;$("hud").classList.remove("hidden");
+  player.position.set(0,groundHeight(0,30),30);player.visible=true;$("hud").classList.remove("hidden");
   if(data&&validSave(data)){
-    if(Array.isArray(data.map)&&data.map.length===solids.length&&data.map.every(o=>[o.x,o.z,o.w,o.d,o.h].every(Number.isFinite)&&o.w>0&&o.d>0)){
+    if(data.sector==="olivo-80-v1"&&Array.isArray(data.map)&&data.map.length===solids.length&&data.map.every(o=>[o.x,o.z,o.w,o.d,o.h].every(Number.isFinite)&&o.w>0&&o.d>0)){
       solids.splice(0,solids.length,...data.map.map(o=>({...o})));
       for(const b of data.buildings||[]){const g=world.children.find(o=>o.userData.building&&o.position.x===b.x&&o.position.z===b.z);if(g&&b.h>=9&&b.h<=21){const ratio=b.h/g.userData.height;g.scale.y*=ratio;g.userData.height=b.h;}}
       (data.cars||[]).forEach((v,i)=>{if(cars[i]&&[v.x,v.z,v.rot].every(Number.isFinite)){cars[i].g.position.set(v.x,0,v.z);cars[i].g.rotation.y=v.rot;}});buildNavigation();
@@ -1075,7 +1004,7 @@ function start(mode="explore",data=null){
     spawnWait=Math.max(0,Number(data.spawnWait)||0);between=Math.max(0,Number(data.between)||0);yaw=data.yaw;pitch=Math.max(-1.2,Math.min(1.2,data.pitch));
     if(!blocked(data.x,data.z))player.position.set(data.x,Math.max(groundHeight(data.x,data.z),Number(data.y)||0),data.z);
     vy=Number.isFinite(data.vy)?data.vy:0;grounded=!!data.grounded;reloading=!!data.reloading;reloadLeft=Math.max(0,Math.min(1.15,Number(data.reloadLeft)||0));
-    for(const saved of data.zombies){const z=spawnZombie(saved.x,saved.z);if(z){z.hp=saved.hp;z.speed=saved.speed;z.attack=Math.max(0,Number(saved.attack)||0);z.groan=Math.max(1,Number(saved.groan)||1);}}
+    for(const saved of data.zombies){if(blocked(saved.x,saved.z,.48)){if(mode==="waves")remaining++;continue;}const z=spawnZombie(saved.x,saved.z);if(z){z.hp=saved.hp;z.speed=saved.speed;z.attack=Math.max(0,Number(saved.attack)||0);z.groan=Math.max(1,Number(saved.groan)||1);}}
   }else if(mode==="waves")newWave();else{remaining=6;announce("DÍA 47 · ZONA DE PRUEBAS");}
   saveWait=0;$("continue").textContent="CONTINUAR";$("subtitle").textContent="LA CIUDAD HA CAÍDO. TÚ TODAVÍA NO.";hideMenu();hud();wakeAudio();updatePlayerCamera(1,true);requestLock();
 }
@@ -1112,6 +1041,7 @@ $("apply").onclick = () => {
   if (ambience) ambience.volume = volume * .38;
   updateAudio();
   try{localStorage.setItem("deadzone-options",JSON.stringify({fov:camera.fov,sensitivity,volume,quality:$("quality").value}));}catch{}
+  sun.shadow.mapSize.set($("quality").value==="high"?2048:1024,$("quality").value==="high"?2048:1024);sun.shadow.map?.dispose();sun.shadow.map=null;
   renderer.setPixelRatio(
     Math.min(
       devicePixelRatio,
@@ -1225,19 +1155,23 @@ window.addEventListener("blur", () => {
     keys[k] = false;
   });
 });
-const hero={visual:null,mixer:null,walk:null};
+const hero={visual:null,mixer:null,walk:null,idle:null,run:null,current:null};
 const heroFallback=basicZombie();player.add(heroFallback.g);
 heroFallback.g.traverse(o=>{if(o.isMesh)o.material=mat(o.position.y>1.4?0x997a64:0x454d47);});
 async function installHero(){
-  const path="https://cdn.jsdelivr.net/gh/KhronosGroup/glTF-Sample-Assets@main/Models/CesiumMan/glTF-Binary/CesiumMan.glb";
+  const path="https://cdn.jsdelivr.net/gh/mrdoob/three.js@r160/examples/models/gltf/Soldier.glb";
   const asset=await gltf.loadAsync(path),src=copy(asset);hero.visual=fit(src,1.8);hero.visual.rotation.y=Math.PI;player.add(hero.visual);
-  hero.mixer=new T.AnimationMixer(src);const clips=inPlaceClips(asset);if(!clips.length)throw Error("Humanoide sin animaciones");hero.walk=hero.mixer.clipAction(clips[0]);hero.walk.play();heroFallback.g.visible=false;
-  $("asset-status").textContent="PERSONAJE RIGGEADO CARGADO";
+  src.traverse(o=>{if(o.isMesh){o.castShadow=true;for(const m of Array.isArray(o.material)?o.material:[o.material])m.roughness=.92;}});
+  hero.mixer=new T.AnimationMixer(src);const clips=inPlaceClips(asset);
+  const action=name=>{const clip=clips.find(c=>c.name.toLowerCase()===name);if(!clip)throw Error('Falta animación '+name);return hero.mixer.clipAction(clip);};
+  hero.idle=action('idle');hero.walk=action('walk');hero.run=action('run');hero.current=hero.idle;hero.idle.play();heroFallback.g.visible=false;
+  $("asset-status").textContent="HUMANO · IDLE / WALK / RUN";
 }
 function updatePlayerCamera(dt,snap=false){
   const crouch=!!(keys.ControlLeft||keys.KeyC), moving=playerState.moving;
   player.rotation.y=yaw;
-  if(hero.walk){hero.walk.paused=!moving;hero.walk.timeScale=keys.ShiftLeft?1.65:crouch?.65:1;hero.mixer.update(dt);}
+  if(hero.mixer){const next=moving?(keys.ShiftLeft&&!crouch?hero.run:hero.walk):hero.idle;
+    if(next!==hero.current){hero.current.fadeOut(.2);next.reset().setEffectiveTimeScale(1).setEffectiveWeight(1).fadeIn(.2).play();hero.current=next;}next.timeScale=crouch?.65:1;hero.mixer.update(dt);}
   if(hero.visual)hero.visual.position.y=0;
   if(!hero.visual){const swing=moving?Math.sin(performance.now()*.009)*.45:0;heroFallback.legs[0].rotation.x=swing;heroFallback.legs[1].rotation.x=-swing;}
   gunAnchor.position.set(.3,crouch?.94:1.24,-.38+recoil);gunAnchor.rotation.set(aimHeld?pitch:0,0,0);
@@ -1256,24 +1190,42 @@ function optimizeTextures(asset){asset.scene.traverse(o=>{if(!o.isMesh)return;fo
   for(const key of ["map","normalMap","roughnessMap","metalnessMap","aoMap"]){const t=material[key],img=t?.image;if(!img||t.userData.reduced)continue;
     t.userData.reduced=true;if(Math.max(img.width,img.height)>512){const c=document.createElement("canvas"),ratio=512/Math.max(img.width,img.height);c.width=Math.max(1,Math.round(img.width*ratio));c.height=Math.max(1,Math.round(img.height*ratio));c.getContext("2d").drawImage(img,0,0,c.width,c.height);t.image=c;t.needsUpdate=true;}}
 }});}
+const ART_BASE="https://raw.githubusercontent.com/FliickzzzZ/Modelos-3d-Juego-Chromebook/deadzone/art-street-80m/deadzone/assets/";
+const artURL=name=>ART_BASE+name;
+async function pbr(material,base,normal,orm,repeat){
+ const loader=new T.TextureLoader();const maps=await Promise.all([base,normal,orm].map(n=>n?loader.loadAsync(artURL(n)):null));
+ for(let i=0;i<maps.length;i++){const t=maps[i];if(t){t.wrapS=t.wrapT=T.RepeatWrapping;t.repeat.set(...repeat);t.anisotropy=2;if(i===0)t.colorSpace=T.SRGBColorSpace;}}
+ material.map=maps[0];material.normalMap=maps[1];material.normalScale.set(.45,.45);material.roughnessMap=maps[2];material.metalness=0;material.roughness=.97;material.needsUpdate=true;
+}
 async function installCity(){
-  const paths=["Ciudad/Exports/glTF (Godot)/Brick_Plain_3.gltf","Ciudad/Exports/glTF (Godot)/Brick_Window_Square_Single.gltf"];
-  const modules=[];for(const p of paths){const a=await load(p);optimizeTextures(a);modules.push(a);}
-  for(let i=0;i<cityPanels.length;i++){
-    const p=cityPanels[i],src=copy(modules[i%modules.length]),b=new T.Box3().setFromObject(src),size=b.getSize(new T.Vector3()),center=b.getCenter(new T.Vector3());
-    const group=new T.Group(),offset=new T.Group();group.add(offset);offset.add(src);offset.position.copy(center).negate();
-    const alongZ=p.dd>p.ww;group.scale.set((alongZ?p.dd:p.ww)/Math.max(.01,size.x),3.2/Math.max(.01,size.y),.25/Math.max(.01,size.z));
-    group.rotation.y=alongZ?Math.PI/2:0;group.position.set(p.lx,1.8,p.lz);p.g.add(group);p.mesh.visible=false;
-  }
-  $("city-status").textContent="APARTAMENTO EXPLORABLE · 2 MÓDULOS MEGAKIT";
+ const names=['Building_Small_1','Building_Medium_2_001'];
+ for(let i=0;i<2;i++){
+  const asset=await gltf.loadAsync(artURL(names[i]+'.glb')),src=copy(asset),g=fit(src,i?21:17);g.rotation.y=i?-Math.PI/2:Math.PI/2;g.position.set(i?13:-13,.22,i?-13:3);
+  g.userData.building=true;g.userData.height=i?21:17;g.userData.asset=names[i];world.add(g);g.traverse(o=>{if(o.isMesh){o.castShadow=true;o.receiveShadow=true;}});
+  g.updateMatrixWorld(true);const bounds=new T.Box3().setFromObject(g),size=bounds.getSize(new T.Vector3()),center=bounds.getCenter(new T.Vector3());Object.assign(solids[i],{x:center.x,z:center.z,w:size.x,d:size.z,h:size.y});
+ }
+ await Promise.all([pbr(m.road,'T_Concrete_Asphalt_BaseColor.png','T_Concrete_Normal.png','T_Concrete_ORM.png',[2,16]),pbr(m.walk,'T_Concrete_BaseColor.png','T_Concrete_Normal.png','T_Concrete_ORM.png',[3,20]),pbr(m.ground,'T_Dirt_BaseColor.png','T_Dirt_Normal.png','T_Dirt_ORM.png',[8,16])]);
+ await installVegetation();buildNavigation();cityReady=true;$("city-status").textContent="CALLE DEL OLIVO · 80 M · 2 EDIFICIOS COMPLETOS";
+}
+async function installVegetation(){
+ const data=await Promise.all(['tree','shrub','grass'].map(n=>gltf.loadAsync(artURL(n+'.glb'))));
+ function instance(asset,poses,trunks=false){asset.scene.updateMatrixWorld(true);asset.scene.traverse(src=>{if(!src.isMesh)return;const mesh=new T.InstancedMesh(src.geometry,src.material,poses.length);mesh.userData.decorative=!(trunks&&src.material.name==='bark');mesh.receiveShadow=true;for(let i=0;i<poses.length;i++){const p=poses[i],q=new T.Quaternion().setFromEuler(new T.Euler(0,p.r||0,0));matrix.compose(new T.Vector3(p.x,p.y||.22,p.z),q,new T.Vector3(p.s||1,p.s||1,p.s||1));matrix.multiply(src.matrixWorld);mesh.setMatrixAt(i,matrix);}mesh.computeBoundingSphere();world.add(mesh);});}
+ const trees=[{x:-7.5,z:25,s:1},{x:7.5,z:8,s:.85},{x:-7.7,z:-24,s:1.2},{x:8,z:-35,s:.8}];instance(data[0],trees,true);for(const t of trees)addSolid(t.x,t.z,.65,.65,6);
+ const shrubs=[],grass=[];for(let i=0;i<65;i++)shrubs.push({x:(rnd()>.5?1:-1)*(7+rnd()*1.1),z:(rnd()-.5)*77,s:.55+rnd()*.5,r:rnd()*6});
+ for(let i=0;i<380;i++)grass.push({x:(rnd()>.5?1:-1)*(4.35+rnd()*1.2),z:(rnd()-.5)*79,s:.6+rnd()*.9,r:rnd()*6});
+ // Colonized road seams. Keep central route readable.
+ for(let i=0;i<100;i++)grass.push({x:(rnd()-.5)*8.8,z:(rnd()-.5)*76,s:.25+rnd()*.55,r:rnd()*6,y:.06});
+ instance(data[1],shrubs);instance(data[2],grass);
+ // Shrub foliage flattened along facade = climbing ivy, distinct from trees.
+ const ivy=[];for(const side of [-1,1])for(let i=0;i<34;i++)ivy.push({x:side*6.88,z:(side<0?3:-13)+(rnd()-.5)*11,y:.5+rnd()*10,s:.35+rnd()*.6,r:rnd()*6});instance(data[1],ivy);
 }
 async function loadAssets(){
-  const jobs=[installHero().catch(e=>{console.warn("Personaje provisional geométrico",e);$("asset-status").textContent="PERSONAJE BÁSICO · FALLÓ EL GLB";}),installCity().catch(e=>{console.warn("MegaKit no disponible",e);$("city-status").textContent="APARTAMENTO BÁSICO · FALLÓ MEGAKIT";})];
+  const jobs=[installHero().catch(e=>{console.warn("Personaje provisional geométrico",e);$("asset-status").textContent="PERSONAJE BÁSICO · FALLÓ EL GLB";}),installCity().catch(e=>{console.warn("MegaKit no disponible",e);$("city-status").textContent="FALLO DE CARGA · CALLE INCOMPLETA";})];
   for(const p of ["Zombies/zombie_1.glb","Zombies/zombie_2.glb"]){try{const a=await load(p);optimizeTextures(a);assets.zombies.push(a);}catch(e){console.warn(p,e);}}
   for(const z of [...zombies]){if(!z.visual&&assets.zombies.length){const state={x:z.actor.position.x,z:z.actor.position.z,hp:z.hp,speed:z.speed};removeZombie(z);const n=spawnZombie(state.x,state.z);if(n){n.hp=state.hp;n.speed=state.speed;}}}
   try{assets.gun=await load("Armas 3D/pistola/9_mm.glb");optimizeTextures(assets.gun);installGun(assets.gun);}catch(e){console.warn("Pistola básica",e);}
-  try{assets.car=await load("Armas 3D/coche/covered_car_4k.glb");for(const c of cars.slice(0,3)){c.g.add(fit(copy(assets.car),1.5,2.1,4.3));c.low.visible=false;}}catch(e){console.warn("Coche básico",e);}
-  await Promise.allSettled(jobs);$("loading").textContent="LISTO · P PARA GUARDAR";
+  try{assets.car=await load("Armas 3D/coche/covered_car_4k.glb");const carMap=await new T.TextureLoader().loadAsync(artURL("car-diffuse.jpg"));carMap.colorSpace=T.SRGBColorSpace;carMap.flipY=false;assets.car.scene.traverse(o=>{if(o.isMesh){o.castShadow=true;o.receiveShadow=true;for(const material of Array.isArray(o.material)?o.material:[o.material]){material.map=carMap;material.roughness=.95;material.metalness=.15;material.needsUpdate=true;}}});for(const c of cars){c.g.add(fit(copy(assets.car),1.5,2.1,4.3));c.low.visible=false;}}catch(e){console.warn("Coche básico",e);}
+  await Promise.allSettled(jobs);assetsReady=cityReady&&!!hero.visual;$("loading").textContent=assetsReady?"LISTO · P PARA GUARDAR":"ERROR · RECURSOS VISUALES INCOMPLETOS";
 }
 let fpsCount = 0;
 let fpsTimer = 0;
@@ -1417,7 +1369,7 @@ function frame() {
   }
   if(!alive){
     player.visible=true;gunAnchor.position.set(.3,1.24,-.38);player.rotation.y=-.5;
-    if(hero.mixer){hero.walk.paused=true;hero.mixer.update(dt);}
+    if(hero.mixer){hero.mixer.update(dt);}
     const t=performance.now()*.00006;camera.position.set(player.position.x+4+Math.sin(t)*1.2,player.position.y+2.1,player.position.z+5);camera.lookAt(player.position.x,player.position.y+1,player.position.z);
   }
   if($("mode-name"))$("mode-name").textContent=modes[playerState.mode].title;
